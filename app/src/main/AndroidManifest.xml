@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.mscomputers.cableuncle">
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <permission android:name="android.permission.BIND_DEVICE_ADMIN" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+
+    <application
+        android:name=".CableUncleApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Splash"
+            android:theme="@android:style/Theme.NoTitleBar"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".Login"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateHidden"></activity>
+
+        <activity
+            android:name=".Dashboard"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar"
+
+            android:windowSoftInputMode="stateHidden"></activity>
+
+        <activity
+            android:name=".Payment"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar"
+
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".Complaint"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar"
+
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".TotalCollectionReport"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar"
+
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".LastTransactions"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@android:style/Theme.NoTitleBar"
+
+            android:label="@string/app_name"></activity>
+        <activity
+            android:name=".aem.PrintActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@android:style/Theme.NoTitleBar"
+
+            android:label="@string/app_name"></activity>
+        <activity
+            android:name=".PayNow"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:label="@string/app_name"></activity>
+
+        <activity
+            android:name=".maestro.microatm.AccordionWidgetDemoActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:label="@string/app_name"></activity>
+
+        <activity
+            android:name=".Printing.Maestro"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:label="@string/app_name"></activity>
+
+        <activity
+            android:name=".maestro.microatm.DeviceListActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:label="@string/app_name"></activity>
+
+
+    </application>
+
+
+    <!-- <application
+         android:icon="@drawable/ic_launcher"
+         android:label="@string/app_name"
+         android:theme="@android:style/Theme.Holo.Light.DarkActionBar">
+
+         <activity
+             android:name=".MainActivity"
+             android:windowSoftInputMode="stateHidden"
+             android:label="@string/app_name">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+         </activity>
+
+         <activity
+             android:name=".CollectionDemoActivity"
+             android:windowSoftInputMode="stateHidden"
+             android:label="@string/demo_collection" />
+
+     </application>-->
+</manifest>

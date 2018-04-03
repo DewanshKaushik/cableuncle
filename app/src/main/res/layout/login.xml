@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/redColor"
+    android:orientation="vertical"
+    android:weightSum="4">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="CABLE UNCLE"
+            android:textColor="@color/whitecolor"
+            android:textSize="20dp" />
+
+<!--
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="CABLE UNCLE"
+            android:textColor="@color/whitecolor"
+            android:textSize="15dp" />
+-->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="For any issues Call us at"
+            android:textColor="@color/whitecolor"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="+91-9999999999, 9999999999"
+            android:visibility="gone"
+            android:textColor="@color/whitecolor"
+            android:textSize="15dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="12dp"
+        android:layout_weight="2"
+        android:background="@drawable/background_for_exam_type_dialog"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <EditText
+            android:id="@+id/loginEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_background"
+            android:hint="UserId"
+            android:text=""
+            android:padding="12dp"
+            android:inputType="textEmailAddress"
+            android:singleLine="true"
+            android:textColor="@color/blackcolor"
+            android:textColorHint="@color/blackcolor" />
+
+        <EditText
+            android:id="@+id/loginPassword"
+            android:layout_width="match_parent"
+            android:text=""
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_background"
+            android:padding="12dp"
+            android:hint="Password"
+            android:layout_marginTop="12dp"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textColor="@color/blackcolor"
+            android:textColorHint="@color/blackcolor" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/redColor"
+            android:onClick="goToAdminHome"
+            android:layout_marginTop="12dp"
+            android:text="Log In"
+            android:textColor="@color/whitecolor" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:visibility="gone"
+            android:onClick="forgotPassword"
+            android:gravity="center"
+            android:text="Forgot Password?"
+            android:textColor="@color/blackcolor" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:text="www.cableuncle.com"
+        android:textColor="@color/whitecolor" />
+
+</LinearLayout>

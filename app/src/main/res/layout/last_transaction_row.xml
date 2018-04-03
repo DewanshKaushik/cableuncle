@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/greycolor"
+    android:orientation="vertical"
+    android:layout_margin="12dp"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Receipt Number:"
+                android:layout_weight="1"
+                android:textColor="@color/blackcolor"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/receiptNumber"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="agasdfkgalskj"
+                android:layout_weight="1"
+                android:textColor="@color/blackcolor" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Subscriber ID:"
+                android:layout_weight="1"
+                android:textColor="@color/blackcolor"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/subscriberId"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="agasdfkgalskj"
+                android:layout_weight="1"
+                android:textColor="@color/blackcolor" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name:"
+                android:layout_weight="1"
+                android:textColor="@color/blackcolor"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/name"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="agasdfkgalskj"
+                android:layout_weight="1"
+                android:textColor="@color/blackcolor" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date:"
+                android:layout_weight="1"
+                android:textColor="@color/blackcolor"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/date"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="agasdfkgalskj"
+                android:layout_weight="1"
+                android:textColor="@color/blackcolor" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Time:"
+                android:layout_weight="1"
+                android:textColor="@color/blackcolor"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/time"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="agasdfkgalskj"
+                android:layout_weight="1"
+                android:textColor="@color/blackcolor" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Payment Mode:"
+                android:layout_weight="1"
+                android:textColor="@color/blackcolor"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/paymentMode"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="agasdfkgalskj"
+                android:layout_weight="1"
+                android:textColor="@color/blackcolor" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Paid Amount:"
+                android:layout_weight="1"
+                android:textColor="@color/blackcolor"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/paidAmount"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="agasdfkgalskj"
+                android:layout_weight="1"
+                android:textColor="@color/blackcolor" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Balance Amount:"
+                android:layout_weight="1"
+                android:textColor="@color/blackcolor"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/balanceAmount"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="agasdfkgalskj"
+                android:layout_weight="1"
+                android:textColor="@color/blackcolor" />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="5dp"
+            android:background="@color/redColor"
+            android:text="Print"
+            android:textColor="@color/whitecolor" />
+
+    </LinearLayout>
+
+</LinearLayout>
