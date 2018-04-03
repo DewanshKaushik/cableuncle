@@ -146,7 +146,7 @@ public class PrintActivity extends MAdeptActivity implements IAemCardScanner,
         }
 
         String data = "Invoice Cum Receipt";
-        String d = "_________________________________";
+        String d = "_____________________________";
         try {
             m_AemPrinter.setFontType(AEMPrinter.DOUBLE_HEIGHT);
             m_AemPrinter.setFontType(AEMPrinter.TEXT_ALIGNMENT_CENTER);

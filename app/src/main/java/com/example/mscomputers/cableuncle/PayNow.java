@@ -230,7 +230,7 @@ public class PayNow extends MAdeptActivity {
                                     @Override
                                     public void onButtonClicked(String text) {
                                         if (text.equalsIgnoreCase("OK")) {
-                                            new CustomDialog(PayNow.this, "Printing", "Select Machine", new String[]{"AEM"/*, "MAESTRO"*/}, new DialogButtonListener() {
+                                            new CustomDialog(PayNow.this, "Printing", "Select Machine", new String[]{"AEM", "MAESTRO"}, new DialogButtonListener() {
                                                 @Override
                                                 public void onButtonClicked(String text) {
                                                     if (text.equalsIgnoreCase("AEM")) {
@@ -240,6 +240,7 @@ public class PayNow extends MAdeptActivity {
                                                         startActivity(intent);
                                                     } else if (text.equalsIgnoreCase("MAESTRO")) {
                                                         Intent intent = new Intent(PayNow.this, Maestro.class);
+                                                        intent.putExtra("payNowModelData", payNowModelData);
                                                         startActivity(intent);
                                                     }
                                                 }

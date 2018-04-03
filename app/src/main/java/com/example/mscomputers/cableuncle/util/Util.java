@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import mmsl.DeviceUtility.DeviceBluetoothCommunication;
+
 /**
  * Created by User on 1/20/2017.
  */
@@ -209,6 +211,24 @@ public class Util {
     public static double getRoundDigit(double a){
         double roundOff = Math.round(a * 100.0) / 100.0;
         return roundOff;
+    }
+    public static String cutStringsecond(String string) {
+        String finalString = "";
+        if (string.length() > 30 && string.length() < 60) {
+            finalString = string.substring(0, 30) + "\n" + string.substring(30, string.length());
+        } else if (string.length() > 60 && string.length() < 90) {
+            finalString = string.substring(0, 30) + "\n" + string.substring(30, 60) + "\n" + string.substring(60, string.length());
+        } else if (string.length() > 90 && string.length() < 120) {
+            finalString = string.substring(0, 30) + "\n" + string.substring(30, 60) + "\n" + string.substring(60, 90) + "\n" + string.substring(90, string.length());
+        } else {
+            return string;
+        }
+        return finalString;
+    }
+
+    public static void printMaestroLine(DeviceBluetoothCommunication deviceBluetoothCommunication, String string){
+        deviceBluetoothCommunication.SendData(string.getBytes());
+        deviceBluetoothCommunication.LineFeed();
     }
 
 }
