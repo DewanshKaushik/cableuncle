@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +39,11 @@ public class PayNow extends MAdeptActivity {
     TextView lcoName, customerName, subscriberId, noOfTv, mobileNumber, balanceAmount, basics, total;
     String subscriberIdd;
     PayNowModel payNowModelData;
-    EditText remark;
+    LinearLayout bankLayout,chequeLayout;
+    EditText remark,addnAmount,bankName,chequeNumber;
+    RadioGroup radioGroup;
+    int index;
+    String paymentMode="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +60,39 @@ public class PayNow extends MAdeptActivity {
         basics = (TextView) findViewById(R.id.basics);
         total = (TextView) findViewById(R.id.total);
         remark = (EditText) findViewById(R.id.remark);
+        addnAmount= (EditText) findViewById(R.id.addnAmount);
+        bankName= (EditText) findViewById(R.id.bankName);
+        chequeNumber= (EditText) findViewById(R.id.chequeNumber);
+        radioGroup= (RadioGroup) findViewById(R.id.radioGroup);
+
+        bankLayout= (LinearLayout) findViewById(R.id.bankLayout);
+        chequeLayout= (LinearLayout) findViewById(R.id.chequeLayout);
+
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int i) {
+                RadioButton radioButton = (RadioButton) radioGroup.findViewById(i);
+                index = radioGroup.indexOfChild(radioButton);
+
+
+                if (index == 0) {
+                    paymentMode="cash";
+                    bankLayout.setVisibility(View.GONE);
+                    bankName.setText("");
+                    chequeNumber.setText("");
+                    chequeLayout.setVisibility(View.GONE);
+                   // radioButton.setChecked(false);
+                } else if (index == 1) {
+                    paymentMode="cheque";
+                    bankLayout.setVisibility(View.VISIBLE);
+                    chequeLayout.setVisibility(View.VISIBLE);
+                    //radioButton.setChecked(false);
+
+                }
+            }
+        });
+
 
         subscriberIdd = getIntent().getStringExtra("subscriberId");
 
@@ -173,7 +213,7 @@ public class PayNow extends MAdeptActivity {
                     @Override
                     public void onButtonClicked(String text) {
                         if (text.equalsIgnoreCase("ok")) {
-                            submitPayment(payNowModelData.amount);
+                            getFields();
                         }
                     }
                 }, payNowModelData).show();
@@ -182,7 +222,28 @@ public class PayNow extends MAdeptActivity {
         }).show();
     }
 
-    public void submitPayment(String amount) {
+    public void getFields(){
+        String remarkString = remark.getEditableText().toString();
+        if (remarkString.equalsIgnoreCase("")) {
+            remarkString = "No remark";
+        }
+        String addnAmountString = addnAmount.getEditableText().toString();
+        if (addnAmountString.equalsIgnoreCase("")) {
+            addnAmountString = "No Additional Amount";
+        }
+        String bankNameString = bankName.getEditableText().toString();
+        if (bankNameString.equalsIgnoreCase("")) {
+            bankNameString = "Not Available";
+        }
+        String chequeNumberString= chequeNumber.getEditableText().toString();
+        if (chequeNumberString.equalsIgnoreCase("")) {
+            chequeNumberString = "Not Available";
+        }
+        submitPayment(remarkString,addnAmountString,bankNameString,chequeNumberString,payNowModelData.amount);
+
+    }
+
+    public void submitPayment(String remarkString,String addnAmountString,String bankNameString,String chequeNumberString,String amount) {
         MAdeptPrefs.getInstance(PayNow.this).loadPrefs();
 
         MAdeptRequest req = new MAdeptRequest(Constants.SUBMIT_PAYMENT, PayNow.this, Constants.SUBMIT_PAYMENT_URL, MAdeptRequest.METHOD_POST);
@@ -192,18 +253,13 @@ public class PayNow extends MAdeptActivity {
         req.addParam("payment", amount);
         req.addParam("get_id", MAdeptPrefs.getInstance(PayNow.this).getPrefs(Constants.UNIQUE_ID));
         req.addParam("total_bill", payNowModelData.total + "");
-        req.addParam("pay_mode", "cash");
-        req.addParam("cheque_no", "null");
+        req.addParam("pay_mode", paymentMode);
+        req.addParam("cheque_no", chequeNumberString);
         req.addParam("ifsc_code", "null");
-        req.addParam("dis_amount", "null");
+        req.addParam("dis_amount", addnAmountString);
         req.addParam("other", "null");
         req.addParam("discount", "null");
         req.addParam("due_date", Util.getDateandTime());
-
-        String remarkString = remark.getEditableText().toString();
-        if (remarkString.equalsIgnoreCase("")) {
-            remarkString = "No remark";
-        }
         req.addParam("remark", remarkString);
         req.addParam("account_no", "null");
 
@@ -238,10 +294,12 @@ public class PayNow extends MAdeptActivity {
                                                         Intent intent = new Intent(PayNow.this, PrintActivity.class);
                                                         intent.putExtra("payNowModelData", payNowModelData);
                                                         startActivity(intent);
+                                                        finish();
                                                     } else if (text.equalsIgnoreCase("MAESTRO")) {
                                                         Intent intent = new Intent(PayNow.this, Maestro.class);
                                                         intent.putExtra("payNowModelData", payNowModelData);
                                                         startActivity(intent);
+                                                        finish();
                                                     }
                                                 }
                                             }).show();

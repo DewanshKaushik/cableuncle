@@ -460,13 +460,12 @@
                     android:layout_gravity="left"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="Total:"
+                    android:text="Total Amount:"
                     android:textColor="@color/blackcolor"
                     android:textSize="17dp" />
 
                 <TextView
                     android:id="@+id/total"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -485,6 +484,7 @@
                 android:layout_marginRight="12dp"
                 android:background="@color/redColor" />
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -499,17 +499,169 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="left|center"
-                    android:text="Remark:"
+                    android:text="Additional Amount:"
+                    android:textColor="@color/blackcolor"
+                    android:textSize="17dp" />
+
+                <EditText
+                    android:id="@+id/addnAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:hint="Additional Amount"
+                    android:layout_weight="1"
+                    android:textColor="@color/blackcolor"
+                    android:textSize="17dp" />
+
+
+            </LinearLayout>
+
+<!--        radio buttons-->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@color/redColor" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:orientation="horizontal"
+                android:background="@color/appColor"
+                android:padding="12dp">
+
+                <RadioButton
+                    android:id="@+id/cash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left|center"
+                    android:layout_weight="1"
+                    android:gravity="left|center"
+                    android:text="Cash"
+                    android:textColor="@color/blackcolor"
+                    android:textSize="17dp" />
+
+                <RadioButton
+                    android:id="@+id/cheque"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:gravity="left|center"
+                    android:layout_weight="1"
+                    android:text="Cheque"
+                    android:textColor="@color/blackcolor"
+                    android:textSize="17dp" />
+
+
+            </RadioGroup>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@color/redColor" />
+
+            <LinearLayout
+                android:id="@+id/bankLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:visibility="gone"
+                android:layout_marginRight="12dp"
+                android:background="@color/appColor"
+                android:padding="12dp">
+
+                <EditText
+                    android:id="@+id/bankName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:hint="Bank Name"
+                    android:layout_weight="1"
+                    android:textColor="@color/blackcolor"
+                    android:textSize="17dp" />
+
+
+            </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="12dp"
+                android:visibility="gone"
+
+                android:layout_marginRight="12dp"
+                android:background="@color/redColor" />
+
+            <LinearLayout
+                android:id="@+id/chequeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@color/appColor"
+                android:padding="12dp">
+
+                <EditText
+                    android:id="@+id/chequeNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:hint="Cheque Number"
+                    android:layout_weight="1"
+                    android:textColor="@color/blackcolor"
+                    android:textSize="17dp" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:visibility="gone"
+
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@color/redColor" />
+
+<!--            remark-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:orientation="vertical"
+                android:layout_marginRight="12dp"
+                android:background="@color/appColor"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="left|center"
+                    android:text="Remarks:"
                     android:textColor="@color/blackcolor"
                     android:textSize="17dp" />
 
                 <EditText
                     android:id="@+id/remark"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:hint="Enter Remark"
+                    android:gravity="left"
+                    android:hint="Remarks"
                     android:layout_weight="1"
                     android:textColor="@color/blackcolor"
                     android:textSize="17dp" />
