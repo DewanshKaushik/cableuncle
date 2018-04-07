@@ -484,6 +484,47 @@
                 android:layout_marginRight="12dp"
                 android:background="@color/redColor" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@color/appColor"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="left|center"
+                    android:text="Paid Amount:"
+                    android:textColor="@color/blackcolor"
+                    android:textSize="17dp" />
+
+                <EditText
+                    android:id="@+id/paidAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="left|center"
+                    android:singleLine="true"
+                    android:hint="Paid Amount"
+                    android:inputType="number"
+                    android:layout_weight="1"
+                    android:textColor="@color/blackcolor"
+                    android:textSize="17dp" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@color/redColor" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -510,6 +551,7 @@
                     android:layout_gravity="center"
                     android:gravity="left|center"
                     android:singleLine="true"
+                    android:inputType="number"
                     android:hint="Additional Amount"
                     android:layout_weight="1"
                     android:textColor="@color/blackcolor"
@@ -591,12 +633,12 @@
 
 
             </LinearLayout>
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="12dp"
                 android:visibility="gone"
-
                 android:layout_marginRight="12dp"
                 android:background="@color/redColor" />
 
@@ -619,6 +661,7 @@
                     android:singleLine="true"
                     android:hint="Cheque Number"
                     android:layout_weight="1"
+                    android:inputType="number"
                     android:textColor="@color/blackcolor"
                     android:textSize="17dp" />
 

@@ -48,7 +48,7 @@ public class Login extends MAdeptActivity {
         String email = loginEmail.getEditableText().toString();
         String password = loginPassword.getEditableText().toString();
         if (!Util.isValidString(email)) {
-            MAdeptUtil.showToast(this, "Enter email");
+            MAdeptUtil.showToast(this, "Enter UserID");
             return;
         }
         if (!Util.isValidEmail(email)) {

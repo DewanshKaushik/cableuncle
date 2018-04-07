@@ -3,6 +3,7 @@ package com.example.mscomputers.cableuncle;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -36,7 +37,7 @@ import com.madept.core.util.MAdeptUtil;
  * Created by MS Computers on 1/7/2018.
  */
 public class PayNow extends MAdeptActivity {
-    TextView lcoName, customerName, subscriberId, noOfTv, mobileNumber, balanceAmount, basics, total;
+    TextView lcoName, customerName, subscriberId, noOfTv, mobileNumber, balanceAmount, basics, total,paidAmount;
     String subscriberIdd;
     PayNowModel payNowModelData;
     LinearLayout bankLayout,chequeLayout;
@@ -44,6 +45,7 @@ public class PayNow extends MAdeptActivity {
     RadioGroup radioGroup;
     int index;
     String paymentMode="";
+    RadioButton cash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +67,13 @@ public class PayNow extends MAdeptActivity {
         chequeNumber= (EditText) findViewById(R.id.chequeNumber);
         radioGroup= (RadioGroup) findViewById(R.id.radioGroup);
 
+        paidAmount= (TextView) findViewById(R.id.paidAmount);
         bankLayout= (LinearLayout) findViewById(R.id.bankLayout);
         chequeLayout= (LinearLayout) findViewById(R.id.chequeLayout);
+        cash= (RadioButton) findViewById(R.id.cash);
 
+        cash.setChecked(true);
+        paymentMode="cash";
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -146,8 +152,6 @@ public class PayNow extends MAdeptActivity {
         balanceAmount.setText(model.balance);
         basics.setText(model.basic + "");
         total.setText(model.total + "");
-
-
     }
 
     public void changePhone(View v) {
@@ -201,8 +205,46 @@ public class PayNow extends MAdeptActivity {
 
     }
 
+    String paidAmountString="";
+    String bankNameString="";
+    String chequeNumberString="";
+
     public void payNow(View v) {
-        new EnterPaymentDialog(PayNow.this, "Enter Payment", new String[]{"OK", "Cancel"}, new DialogButtonListener() {
+        if(paymentMode.equalsIgnoreCase("cash")){
+            paidAmountString= paidAmount.getEditableText().toString();
+            if (paidAmountString.equalsIgnoreCase("")) {
+                MAdeptUtil.showToast(PayNow.this,"Please Enter Paid Amount");
+                return;
+            }
+
+        }else{
+            paidAmountString= paidAmount.getEditableText().toString();
+            bankNameString= bankName.getEditableText().toString();
+            chequeNumberString=chequeNumber.getEditableText().toString();
+            if (paidAmountString.equalsIgnoreCase("")) {
+                MAdeptUtil.showToast(PayNow.this,"Please Enter Paid Amount");
+                return;
+            }else if(bankNameString.equalsIgnoreCase("")){
+                MAdeptUtil.showToast(PayNow.this,"Please Enter Bank Name");
+                return;
+            }else if(chequeNumberString.equalsIgnoreCase("")){
+                MAdeptUtil.showToast(PayNow.this,"Please Enter Cheque Number");
+                return;
+            }
+        }
+        payNowModelData.amount = paidAmountString;
+
+        new ConfirmDialog(PayNow.this, "Confirm Payment", "Message", new String[]{"OK", "Cancel"}, new DialogButtonListener() {
+
+            @Override
+            public void onButtonClicked(String text) {
+                if (text.equalsIgnoreCase("ok")) {
+                    getFields(paidAmountString);
+                }
+            }
+        }, payNowModelData).show();
+
+/*        new EnterPaymentDialog(PayNow.this, "Enter Payment", new String[]{"OK", "Cancel"}, new DialogButtonListener() {
 
             @Override
             public void onButtonClicked(String text) {
@@ -219,17 +261,17 @@ public class PayNow extends MAdeptActivity {
                 }, payNowModelData).show();
 
             }
-        }).show();
+        }).show();*/
     }
 
-    public void getFields(){
+    public void getFields(String paidAmountString){
         String remarkString = remark.getEditableText().toString();
         if (remarkString.equalsIgnoreCase("")) {
             remarkString = "No remark";
         }
         String addnAmountString = addnAmount.getEditableText().toString();
         if (addnAmountString.equalsIgnoreCase("")) {
-            addnAmountString = "No Additional Amount";
+            addnAmountString = "0";
         }
         String bankNameString = bankName.getEditableText().toString();
         if (bankNameString.equalsIgnoreCase("")) {
@@ -237,9 +279,10 @@ public class PayNow extends MAdeptActivity {
         }
         String chequeNumberString= chequeNumber.getEditableText().toString();
         if (chequeNumberString.equalsIgnoreCase("")) {
-            chequeNumberString = "Not Available";
+            chequeNumberString = "0";
         }
-        submitPayment(remarkString,addnAmountString,bankNameString,chequeNumberString,payNowModelData.amount);
+
+        submitPayment(remarkString,addnAmountString,bankNameString,chequeNumberString,paidAmountString);
 
     }
 
@@ -249,19 +292,46 @@ public class PayNow extends MAdeptActivity {
         MAdeptRequest req = new MAdeptRequest(Constants.SUBMIT_PAYMENT, PayNow.this, Constants.SUBMIT_PAYMENT_URL, MAdeptRequest.METHOD_POST);
         req.setJSONParser(JSONParser.getInstance());
         req.addParam("lco", MAdeptPrefs.getInstance(PayNow.this).getPrefs(Constants.LCO));
+        Log.e("paynow",MAdeptPrefs.getInstance(PayNow.this).getPrefs(Constants.LCO));
+
         req.addParam("dev_id", subscriberIdd);
+        Log.e("paynow",subscriberIdd);
+
         req.addParam("payment", amount);
+        Log.e("paynow",amount);
+
         req.addParam("get_id", MAdeptPrefs.getInstance(PayNow.this).getPrefs(Constants.UNIQUE_ID));
+        Log.e("paynow",MAdeptPrefs.getInstance(PayNow.this).getPrefs(Constants.UNIQUE_ID));
+
         req.addParam("total_bill", payNowModelData.total + "");
+        Log.e("paynow",payNowModelData.total + "");
+
         req.addParam("pay_mode", paymentMode);
+        Log.e("paynow",paymentMode);
+
         req.addParam("cheque_no", chequeNumberString);
-        req.addParam("ifsc_code", "null");
-        req.addParam("dis_amount", addnAmountString);
-        req.addParam("other", "null");
+        Log.e("paynow",chequeNumberString);
+
+        req.addParam("ifsc_code", bankNameString);
+        Log.e("paynow",bankNameString);
+
+        req.addParam("dis_amount", "null");
+        Log.e("paynow","null");
+
+        req.addParam("other", addnAmountString);
+        Log.e("paynow",addnAmountString);
+
         req.addParam("discount", "null");
+        Log.e("paynow","null");
+
         req.addParam("due_date", Util.getDateandTime());
+        Log.e("paynow",Util.getDateandTime());
+
         req.addParam("remark", remarkString);
+        Log.e("paynow",remarkString);
+
         req.addParam("account_no", "null");
+        Log.e("paynow","null");
 
         req.processForData(new MAdeptResponseListener() {
             @Override
@@ -318,7 +388,9 @@ public class PayNow extends MAdeptActivity {
 
         });
 
-
+/*
+* Rai.abhishek727@gmail.com
+Pwd-Lotopo@3393*/
     }
 
 
