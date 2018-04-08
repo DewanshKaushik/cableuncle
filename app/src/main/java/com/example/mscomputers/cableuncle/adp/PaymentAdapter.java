@@ -46,7 +46,7 @@ public class PaymentAdapter extends ArrayAdapter<PaymentModel> {
                 Intent i = new Intent(context, PayNow.class);
                 i.putExtra("subscriberId", model.compId);
                 context.startActivity(i);
-                context.finish();
+                // context.finish();
             }
         });
 

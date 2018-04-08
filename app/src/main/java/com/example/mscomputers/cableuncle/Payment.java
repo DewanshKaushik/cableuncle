@@ -1,6 +1,11 @@
 package com.example.mscomputers.cableuncle;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -107,9 +112,51 @@ public class Payment extends MAdeptActivity {
                 // TODO Auto-generated method stub
             }
         });
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+        filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
+        filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+        this.registerReceiver(mReceiver, filter);
 
+    }
+    //The BroadcastReceiver that listens for bluetooth broadcasts
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                // ... //Device found
+            }
+            else if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
+                String previousDeviceAddress=CableUncleApplication.getInstance().device.getAddress();
+              String foundedDeviceAddress=device.getAddress();
+
+                if(previousDeviceAddress.equalsIgnoreCase(foundedDeviceAddress)){
+                    MAdeptUtil.showToast(Payment.this,"Device Connected ");
+                }else{
+                    MAdeptUtil.showToast(Payment.this,"Device Not Connected ");
+                }
+                // ... //Device is now connected
+            }
+            else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+                // ... //Done searching
+            }
+            else if (BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED.equals(action)) {
+                // ... //Device is about to disconnect
+            }
+            else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
+                // ... //Device has disconnected
+            }
+        }
+    };
+    @Override
+    protected void onResume() {
+        super.onResume();
         getPaymentData();
+
+
     }
 
     public void getPaymentData() {

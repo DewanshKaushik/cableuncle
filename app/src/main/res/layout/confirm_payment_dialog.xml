@@ -145,6 +145,7 @@
                 />
 
             <TextView
+                android:id="@+id/paymentMode"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Cash"

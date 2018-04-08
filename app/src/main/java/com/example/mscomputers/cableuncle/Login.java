@@ -51,10 +51,10 @@ public class Login extends MAdeptActivity {
             MAdeptUtil.showToast(this, "Enter UserID");
             return;
         }
-        if (!Util.isValidEmail(email)) {
+       /* if (!Util.isValidEmail(email)) {
             MAdeptUtil.showToast(this, "Enter valid email");
             return;
-        }
+        }*/
         if (!Util.isValidString(password)) {
             MAdeptUtil.showToast(this, "Enter password");
             return;

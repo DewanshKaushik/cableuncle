@@ -1,10 +1,13 @@
 package com.example.mscomputers.cableuncle;
 
 import android.app.Application;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import java.util.ArrayList;
+
+import mmsl.DeviceUtility.DeviceBluetoothCommunication;
 
 /**
  * Created by User on 3/7/2017.
@@ -16,6 +19,10 @@ public class CableUncleApplication extends Application {
     public boolean isOnline=false;
     public ArrayList<String> areaList=new ArrayList<>();
     public String selectedArea;
+    public String previousBalance;
+
+    public DeviceBluetoothCommunication bluetoothCommunication;
+    public BluetoothDevice device;
 
     @Override
     public void onCreate() {

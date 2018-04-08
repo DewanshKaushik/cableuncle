@@ -1,6 +1,11 @@
 package com.example.mscomputers.cableuncle;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -32,6 +37,8 @@ import com.madept.core.net.MAdeptResponse;
 import com.madept.core.net.MAdeptResponseListener;
 import com.madept.core.prefs.MAdeptPrefs;
 import com.madept.core.util.MAdeptUtil;
+
+import mmsl.DeviceUtility.DeviceBluetoothCommunication;
 
 /**
  * Created by MS Computers on 1/7/2018.
@@ -102,6 +109,7 @@ public class PayNow extends MAdeptActivity {
 
         subscriberIdd = getIntent().getStringExtra("subscriberId");
 
+        getBluetoothDevice();
 
         launchPayNowRequest(subscriberIdd);
     }
@@ -152,6 +160,10 @@ public class PayNow extends MAdeptActivity {
         balanceAmount.setText(model.balance);
         basics.setText(model.basic + "");
         total.setText(model.total + "");
+        paidAmount.setText(model.total+"");
+
+        CableUncleApplication.getInstance().previousBalance=model.balance+"";
+
     }
 
     public void changePhone(View v) {
@@ -233,6 +245,7 @@ public class PayNow extends MAdeptActivity {
             }
         }
         payNowModelData.amount = paidAmountString;
+        payNowModelData.payment_mode=paymentMode;
 
         new ConfirmDialog(PayNow.this, "Confirm Payment", "Message", new String[]{"OK", "Cancel"}, new DialogButtonListener() {
 
@@ -271,7 +284,7 @@ public class PayNow extends MAdeptActivity {
         }
         String addnAmountString = addnAmount.getEditableText().toString();
         if (addnAmountString.equalsIgnoreCase("")) {
-            addnAmountString = "0";
+            addnAmountString = "null";
         }
         String bankNameString = bankName.getEditableText().toString();
         if (bankNameString.equalsIgnoreCase("")) {
@@ -279,7 +292,7 @@ public class PayNow extends MAdeptActivity {
         }
         String chequeNumberString= chequeNumber.getEditableText().toString();
         if (chequeNumberString.equalsIgnoreCase("")) {
-            chequeNumberString = "0";
+            chequeNumberString = "null";
         }
 
         submitPayment(remarkString,addnAmountString,bankNameString,chequeNumberString,paidAmountString);
@@ -292,46 +305,46 @@ public class PayNow extends MAdeptActivity {
         MAdeptRequest req = new MAdeptRequest(Constants.SUBMIT_PAYMENT, PayNow.this, Constants.SUBMIT_PAYMENT_URL, MAdeptRequest.METHOD_POST);
         req.setJSONParser(JSONParser.getInstance());
         req.addParam("lco", MAdeptPrefs.getInstance(PayNow.this).getPrefs(Constants.LCO));
-        Log.e("paynow",MAdeptPrefs.getInstance(PayNow.this).getPrefs(Constants.LCO));
+        Log.e("lco", MAdeptPrefs.getInstance(PayNow.this).getPrefs(Constants.LCO));
 
         req.addParam("dev_id", subscriberIdd);
-        Log.e("paynow",subscriberIdd);
+        Log.e("dev_id",subscriberIdd);
 
         req.addParam("payment", amount);
-        Log.e("paynow",amount);
+        Log.e("payment",amount);
 
         req.addParam("get_id", MAdeptPrefs.getInstance(PayNow.this).getPrefs(Constants.UNIQUE_ID));
-        Log.e("paynow",MAdeptPrefs.getInstance(PayNow.this).getPrefs(Constants.UNIQUE_ID));
+        Log.e("get_id",MAdeptPrefs.getInstance(PayNow.this).getPrefs(Constants.UNIQUE_ID));
 
         req.addParam("total_bill", payNowModelData.total + "");
-        Log.e("paynow",payNowModelData.total + "");
+        Log.e("total_bill",payNowModelData.total + "");
 
         req.addParam("pay_mode", paymentMode);
-        Log.e("paynow",paymentMode);
+        Log.e("pay_mode",paymentMode);
 
         req.addParam("cheque_no", chequeNumberString);
-        Log.e("paynow",chequeNumberString);
+        Log.e("cheque_no",chequeNumberString);
 
         req.addParam("ifsc_code", bankNameString);
-        Log.e("paynow",bankNameString);
+        Log.e("ifsc_code",bankNameString);
 
         req.addParam("dis_amount", "null");
-        Log.e("paynow","null");
+        Log.e("dis_amount","null");
 
         req.addParam("other", addnAmountString);
-        Log.e("paynow",addnAmountString);
+        Log.e("other",addnAmountString);
 
         req.addParam("discount", "null");
-        Log.e("paynow","null");
+        Log.e("discount","null");
 
         req.addParam("due_date", Util.getDateandTime());
-        Log.e("paynow",Util.getDateandTime());
+        Log.e("due_date",Util.getDateandTime());
 
         req.addParam("remark", remarkString);
-        Log.e("paynow",remarkString);
+        Log.e("remark",remarkString);
 
         req.addParam("account_no", "null");
-        Log.e("paynow","null");
+        Log.e("account_no","null");
 
         req.processForData(new MAdeptResponseListener() {
             @Override
@@ -356,7 +369,9 @@ public class PayNow extends MAdeptActivity {
                                     @Override
                                     public void onButtonClicked(String text) {
                                         if (text.equalsIgnoreCase("OK")) {
-                                            new CustomDialog(PayNow.this, "Printing", "Select Machine", new String[]{"AEM", "MAESTRO"}, new DialogButtonListener() {
+
+                                           printData();
+                                          /*  new CustomDialog(PayNow.this, "Printing", "Select Machine", new String[]{"AEM", "MAESTRO"}, new DialogButtonListener() {
                                                 @Override
                                                 public void onButtonClicked(String text) {
                                                     if (text.equalsIgnoreCase("AEM")) {
@@ -372,9 +387,7 @@ public class PayNow extends MAdeptActivity {
                                                         finish();
                                                     }
                                                 }
-                                            }).show();
-                                        }else{
-                                            finish();
+                                            }).show();*/
                                         }
                                     }
                                 }).show();
@@ -388,10 +401,79 @@ public class PayNow extends MAdeptActivity {
 
         });
 
-/*
-* Rai.abhishek727@gmail.com
-Pwd-Lotopo@3393*/
+
+        /*
+        * Rai.abhishek727@gmail.com
+        Pwd-Lotopo@3393*/
     }
+
+
+    public void printData(){
+        DeviceBluetoothCommunication communication=CableUncleApplication.getInstance().bluetoothCommunication;
+        BluetoothDevice device=CableUncleApplication.getInstance().device;
+
+        if(communication==null){
+            Intent intent = new Intent(PayNow.this, Maestro.class);
+            intent.putExtra("foundedDeviceAddress", foundedDeviceAddress);
+            intent.putExtra("payNowModelData", payNowModelData);
+            startActivity(intent);
+        }else{
+            Util.printBill(PayNow.this,communication,payNowModelData);
+        }
+        finish();
+
+    }
+
+    public void getBluetoothDevice(){
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+        filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
+        filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+        this.registerReceiver(mReceiver, filter);
+    }
+
+    String foundedDeviceAddress;
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                String previousDeviceAddress=CableUncleApplication.getInstance().device.getAddress();
+                foundedDeviceAddress=device.getAddress();
+
+                // ... //Device found
+            }
+            else if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
+                String previousDeviceAddress=CableUncleApplication.getInstance().device.getAddress();
+                foundedDeviceAddress=device.getAddress();
+
+             /*   if(previousDeviceAddress.equalsIgnoreCase(foundedDeviceAddress)){
+                    MAdeptUtil.showToast(PayNow.this,"Device Connected ");
+                }else{
+                    MAdeptUtil.showToast(PayNow.this,"Device Not Connected ");
+                }*/
+                // ... //Device is now connected
+            }
+            else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+                String previousDeviceAddress=CableUncleApplication.getInstance().device.getAddress();
+                foundedDeviceAddress=device.getAddress();
+
+                // ... //Done searching
+            }
+            else if (BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED.equals(action)) {
+                String previousDeviceAddress=CableUncleApplication.getInstance().device.getAddress();
+                foundedDeviceAddress=device.getAddress();
+                // ... //Device is about to disconnect
+            }
+            else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
+                String previousDeviceAddress=CableUncleApplication.getInstance().device.getAddress();
+                foundedDeviceAddress=device.getAddress();
+                // ... //Device has disconnected
+            }
+        }
+    };
 
 
     public void sendSMS(String phoneNo, String msg) {

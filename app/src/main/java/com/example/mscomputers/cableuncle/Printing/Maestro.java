@@ -3,7 +3,9 @@ package com.example.mscomputers.cableuncle.Printing;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -13,12 +15,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.aem.api.AEMPrinter;
+import com.example.mscomputers.cableuncle.CableUncleApplication;
 import com.example.mscomputers.cableuncle.R;
 import com.example.mscomputers.cableuncle.aem.PrintActivity;
 import com.example.mscomputers.cableuncle.maestro.microatm.DeviceListActivity;
 import com.example.mscomputers.cableuncle.model.PayNowModel;
 import com.example.mscomputers.cableuncle.util.Util;
 import com.madept.core.activity.MAdeptActivity;
+import com.madept.core.util.MAdeptUtil;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -32,11 +36,12 @@ import mmsl.DeviceUtility.DeviceCallBacks;
 public class Maestro extends MAdeptActivity implements DeviceCallBacks {
     Button connectButton;
     Button disconnectButton, printBill;
-    DeviceBluetoothCommunication bluetoothCommunication;
     byte FontStyleVal;
     int duplicatetempnumber;
     BroadcastReceiver _wsqreceiver;
     PayNowModel payNowModelData;
+    String foundedDeviceAddress;
+    DeviceBluetoothCommunication bluetoothCommunication= new DeviceBluetoothCommunication();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +55,50 @@ public class Maestro extends MAdeptActivity implements DeviceCallBacks {
         printBill.setEnabled(false);
 
         payNowModelData = (PayNowModel) getIntent().getSerializableExtra("payNowModelData");
+        foundedDeviceAddress = (String) getIntent().getStringExtra("foundedDeviceAddress");
 
+        if(foundedDeviceAddress!=null && !foundedDeviceAddress.equalsIgnoreCase("")){
+            BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(foundedDeviceAddress);
+
+            CableUncleApplication.getInstance().device =device;
+            bluetoothCommunication=CableUncleApplication.getInstance().bluetoothCommunication;
+            bluetoothCommunication.StartConnection(device, this);
+
+        }
+
+    }
+
+    public void onConnect(View v) {
+        Intent i = new Intent(getApplicationContext(),DeviceListActivity.class);
+        startActivityForResult(i, 12);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            connectButton.setEnabled(false);
+            Toast.makeText(getApplicationContext(),
+                    "Device selected : " + data.getStringExtra("Device"),
+                    Toast.LENGTH_SHORT).show();
+
+            BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(data.getStringExtra("Device"));
+
+            CableUncleApplication.getInstance().device =device;
+            CableUncleApplication.getInstance().bluetoothCommunication=bluetoothCommunication;
+
+            bluetoothCommunication.StartConnection(device, this);
+        }
     }
 
     @Override
     public void onConnectComplete() {
         Util.showToast(Maestro.this, "Connection Successful");
+       // Util.printBill(Maestro.this,CableUncleApplication.getInstance().bluetoothCommunication,payNowModelData);
+
         Log.e("onConnectComplete", "onConnectComplete");
         printBill.setEnabled(true);
 
@@ -152,32 +195,7 @@ public class Maestro extends MAdeptActivity implements DeviceCallBacks {
 
     }
 
-    public void onConnect(View v) {
 
-        Intent i = new Intent(getApplicationContext(),
-                DeviceListActivity.class);
-        startActivityForResult(i, 12);
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            connectButton.setEnabled(false);
-            Toast.makeText(getApplicationContext(),
-                    "Device selected : " + data.getStringExtra("Device"),
-                    Toast.LENGTH_SHORT).show();
-
-            BluetoothAdapter mBluetoothAdapter = BluetoothAdapter
-                    .getDefaultAdapter();
-            BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(data
-                    .getStringExtra("Device"));
-            bluetoothCommunication = new DeviceBluetoothCommunication();
-            bluetoothCommunication.StartConnection(device, this);
-        }
-    }
 
     public void onDisConnect(View v) {
         connectButton.setEnabled(true);
@@ -191,10 +209,12 @@ public class Maestro extends MAdeptActivity implements DeviceCallBacks {
 
     public void printMaestroBill(View v) {
         Toast.makeText(Maestro.this, "Printing " + 2 + " Character/Line Bill", Toast.LENGTH_SHORT).show();
-        printBill();
+        Util.printBill(Maestro.this,CableUncleApplication.getInstance().bluetoothCommunication,payNowModelData);
+        finish();
     }
 
 
+/*
     public void printBill() {
         if (payNowModelData == null) {
             Toast.makeText(Maestro.this, "No Data", Toast.LENGTH_SHORT).show();
@@ -351,6 +371,7 @@ public class Maestro extends MAdeptActivity implements DeviceCallBacks {
 
         }
     }
+*/
 
 
 
@@ -1025,8 +1046,8 @@ public class Maestro extends MAdeptActivity implements DeviceCallBacks {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (bluetoothCommunication != null)
-            bluetoothCommunication.StopConnection();
+   /*     if (bluetoothCommunication != null)
+            bluetoothCommunication.StopConnection();*/
     }
 
 /*

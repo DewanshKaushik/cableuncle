@@ -25,7 +25,7 @@ public class ConfirmDialog extends Dialog {
     String message, alert;
     String[] buttonNames;
     TextView messageTextview, alertText;
-    TextView subscriberId, subscriberName, mobileNumber, amount;
+    TextView subscriberId, subscriberName, mobileNumber, amount,paymentMode;
     ImageView closeDialogButton;
     Button[] buttons = new Button[2];
     Context ctx;
@@ -68,10 +68,13 @@ public class ConfirmDialog extends Dialog {
         mobileNumber = (TextView) findViewById(R.id.mobileNumber);
         amount = (TextView) findViewById(R.id.amount);
 
+        paymentMode = (TextView) findViewById(R.id.paymentMode);
+
         subscriberId.setText(model.subscriberName);
         subscriberName.setText(model.customerName);
         mobileNumber.setText(model.phone);
         amount.setText(model.amount);
+        paymentMode.setText(model.payment_mode);
 
        /* messageTextview = (TextView) findViewById(R.id.messageTextview);
         alertText = (TextView) findViewById(R.id.alertText);

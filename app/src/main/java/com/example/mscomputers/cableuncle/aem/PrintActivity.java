@@ -415,7 +415,7 @@ public class PrintActivity extends MAdeptActivity implements IAemCardScanner,
     public void onShowPairedPrinters(View v) {
 
         String p = m_AemScrybeDevice.pairPrinter("BTprinter0314");
-        showAlert(p);
+     //d   showAlert(p);
         printerList = m_AemScrybeDevice.getPairedPrinters();
 
         if (printerList.size() > 0)
