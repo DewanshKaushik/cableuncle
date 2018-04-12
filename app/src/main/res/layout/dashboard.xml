@@ -77,7 +77,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="12dp"
-                        android:text="Welcome to Area Name:"
+                        android:text=""
                         android:textColor="@color/whitecolor"
                         android:textSize="16dp" />
 
@@ -100,7 +100,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="6dp"
                     android:background="@color/redColor"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -126,7 +126,7 @@
                 </LinearLayout>
                 <!--    third row-->
 
-                <LinearLayout
+              <!--  <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -140,23 +140,22 @@
                         android:layout_height="wrap_content">
 
                     </LinearLayout>
-                </LinearLayout>
+                </LinearLayout>-->
                 <!--    fourth row-->
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginTop="6dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="1dp"
                         android:layout_weight="1"
                         android:background="@color/redColor"
                         android:orientation="vertical">
@@ -185,9 +184,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginLeft="4dp"
                         android:layout_marginRight="8dp"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="0dp"
                         android:layout_weight="1"
                         android:background="@color/redColor"
                         android:orientation="vertical">
@@ -221,7 +220,7 @@
                     android:layout_marginBottom="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="6dp"
                     android:background="@null"
                     android:gravity="center"
                     android:orientation="vertical">

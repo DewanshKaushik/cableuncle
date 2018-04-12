@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="12dp"
-                android:background="@color/redColor"
+                android:background="@color/whitecolor"
                 android:orientation="vertical"
                 android:padding="10dp">
 

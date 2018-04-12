@@ -313,12 +313,24 @@ public class Util {
 
             Util.printMaestroLine(bluetoothCommunication,d);
 
+            String packagePrice= "Package Price: " + CableUncleApplication.getInstance().previousBasics;
+            String finalpackagePrice= Util.cutStringsecond(packagePrice);
+            Util.printMaestroLine(bluetoothCommunication,finalpackagePrice);
+            Log.e("Package Price: ", finalpackagePrice);
+
             String previousBalance = "Prev Balance: " + CableUncleApplication.getInstance().previousBalance;
             String finalPreviousBalance = Util.cutStringsecond(previousBalance);
             Util.printMaestroLine(bluetoothCommunication,finalPreviousBalance);
             Log.e("Prev Balance: ", finalPreviousBalance);
 
-            String basics = "Basic Amt: " + payNowModelData.basic;
+            String Total = "Total: " + CableUncleApplication.getInstance().previousTotalAmount;
+            String finalTotal = Util.cutStringsecond(Total);
+            Util.printMaestroLine(bluetoothCommunication,finalTotal);
+            Log.e("Total: ", finalTotal);
+
+            Util.printMaestroLine(bluetoothCommunication,d);
+
+            String basics = "Basic Amt: " + payNowModelData.paid_amount;
             String finalBasics = Util.cutStringsecond(basics);
             Util.printMaestroLine(bluetoothCommunication,finalBasics);
             Log.e("Basic Amt: ", finalBasics);
@@ -338,10 +350,10 @@ public class Util {
             Util.printMaestroLine(bluetoothCommunication,finalCgst);
             Log.e("CGST: ", finalCgst);
 
-            String total = "Grand Total: " + payNowModelData.total;
-            String finalTotal = Util.cutStringsecond(total);
-            Util.printMaestroLine(bluetoothCommunication,finalTotal);
-            Log.e("Grand Total:", finalTotal);
+         /*   String total = "Grand Total: " + payNowModelData.total;
+            String finaltotal = Util.cutStringsecond(total);
+            Util.printMaestroLine(bluetoothCommunication,finaltotal);
+            Log.e("Grand Total:", finalTotal);*/
 
             String amount = "Paid Amount: " + payNowModelData.total;
             String finalAmount = Util.cutStringsecond(amount);

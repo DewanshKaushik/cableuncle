@@ -40,8 +40,7 @@ public class Maestro extends MAdeptActivity implements DeviceCallBacks {
     int duplicatetempnumber;
     BroadcastReceiver _wsqreceiver;
     PayNowModel payNowModelData;
-    String foundedDeviceAddress;
-    DeviceBluetoothCommunication bluetoothCommunication= new DeviceBluetoothCommunication();
+ //   String foundedDeviceAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +54,9 @@ public class Maestro extends MAdeptActivity implements DeviceCallBacks {
         printBill.setEnabled(false);
 
         payNowModelData = (PayNowModel) getIntent().getSerializableExtra("payNowModelData");
-        foundedDeviceAddress = (String) getIntent().getStringExtra("foundedDeviceAddress");
+      //  foundedDeviceAddress = (String) getIntent().getStringExtra("foundedDeviceAddress");
 
-        if(foundedDeviceAddress!=null && !foundedDeviceAddress.equalsIgnoreCase("")){
+      /*  if(foundedDeviceAddress!=null && !foundedDeviceAddress.equalsIgnoreCase("")){
             BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
             BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(foundedDeviceAddress);
 
@@ -65,7 +64,7 @@ public class Maestro extends MAdeptActivity implements DeviceCallBacks {
             bluetoothCommunication=CableUncleApplication.getInstance().bluetoothCommunication;
             bluetoothCommunication.StartConnection(device, this);
 
-        }
+        }*/
 
     }
 
@@ -73,6 +72,7 @@ public class Maestro extends MAdeptActivity implements DeviceCallBacks {
         Intent i = new Intent(getApplicationContext(),DeviceListActivity.class);
         startActivityForResult(i, 12);
     }
+    DeviceBluetoothCommunication bluetoothCommunication;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -86,6 +86,9 @@ public class Maestro extends MAdeptActivity implements DeviceCallBacks {
 
             BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
             BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(data.getStringExtra("Device"));
+
+            bluetoothCommunication= new DeviceBluetoothCommunication();
+
 
             CableUncleApplication.getInstance().device =device;
             CableUncleApplication.getInstance().bluetoothCommunication=bluetoothCommunication;

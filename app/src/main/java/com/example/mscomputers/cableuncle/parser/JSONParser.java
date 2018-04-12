@@ -128,6 +128,7 @@ public class JSONParser extends MAdeptJSonParser {
         "Grand_total": 250,
         "payment_mode": "cash",
         "cheque_no": 0,
+        "paid_amount": 63.14,
         "remark": "testing"
     }
 }*/
@@ -155,6 +156,7 @@ public class JSONParser extends MAdeptJSonParser {
                 lm.dueBalance = obj1.getInt("due_balance");
                 lm.total = obj1.getInt("Grand_total");
 
+                lm.paid_amount=obj1.getInt("paid_amount");
                 lm.payment_mode= obj1.getString("payment_mode");
                 lm.cheque_no= obj1.getInt("cheque_no");
                 lm.remark= obj1.getString("remark");

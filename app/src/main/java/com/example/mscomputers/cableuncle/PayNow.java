@@ -109,7 +109,7 @@ public class PayNow extends MAdeptActivity {
 
         subscriberIdd = getIntent().getStringExtra("subscriberId");
 
-        getBluetoothDevice();
+      //  getBluetoothDevice();
 
         launchPayNowRequest(subscriberIdd);
     }
@@ -163,6 +163,8 @@ public class PayNow extends MAdeptActivity {
         paidAmount.setText(model.total+"");
 
         CableUncleApplication.getInstance().previousBalance=model.balance+"";
+        CableUncleApplication.getInstance().previousBasics=model.basic+"";
+        CableUncleApplication.getInstance().previousTotalAmount=model.total+"";
 
     }
 
@@ -247,11 +249,10 @@ public class PayNow extends MAdeptActivity {
         payNowModelData.amount = paidAmountString;
         payNowModelData.payment_mode=paymentMode;
 
-        new ConfirmDialog(PayNow.this, "Confirm Payment", "Message", new String[]{"OK", "Cancel"}, new DialogButtonListener() {
-
+        new ConfirmDialog(PayNow.this, "Confirm Payment", "Message", new String[]{"Cancel", "Confirm"}, new DialogButtonListener() {
             @Override
             public void onButtonClicked(String text) {
-                if (text.equalsIgnoreCase("ok")) {
+                if (text.equalsIgnoreCase("Confirm")) {
                     getFields(paidAmountString);
                 }
             }
@@ -388,6 +389,8 @@ public class PayNow extends MAdeptActivity {
                                                     }
                                                 }
                                             }).show();*/
+                                        }else{
+                                            finish();
                                         }
                                     }
                                 }).show();
@@ -414,7 +417,7 @@ public class PayNow extends MAdeptActivity {
 
         if(communication==null){
             Intent intent = new Intent(PayNow.this, Maestro.class);
-            intent.putExtra("foundedDeviceAddress", foundedDeviceAddress);
+          //  intent.putExtra("foundedDeviceAddress", foundedDeviceAddress);
             intent.putExtra("payNowModelData", payNowModelData);
             startActivity(intent);
         }else{
@@ -424,6 +427,7 @@ public class PayNow extends MAdeptActivity {
 
     }
 
+/*
     public void getBluetoothDevice(){
         IntentFilter filter = new IntentFilter();
         filter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
@@ -431,8 +435,10 @@ public class PayNow extends MAdeptActivity {
         filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
         this.registerReceiver(mReceiver, filter);
     }
+*/
 
-    String foundedDeviceAddress;
+  //  String foundedDeviceAddress;
+/*
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -449,11 +455,13 @@ public class PayNow extends MAdeptActivity {
                 String previousDeviceAddress=CableUncleApplication.getInstance().device.getAddress();
                 foundedDeviceAddress=device.getAddress();
 
-             /*   if(previousDeviceAddress.equalsIgnoreCase(foundedDeviceAddress)){
+             */
+/*   if(previousDeviceAddress.equalsIgnoreCase(foundedDeviceAddress)){
                     MAdeptUtil.showToast(PayNow.this,"Device Connected ");
                 }else{
                     MAdeptUtil.showToast(PayNow.this,"Device Not Connected ");
-                }*/
+                }*//*
+
                 // ... //Device is now connected
             }
             else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
@@ -474,6 +482,7 @@ public class PayNow extends MAdeptActivity {
             }
         }
     };
+*/
 
 
     public void sendSMS(String phoneNo, String msg) {

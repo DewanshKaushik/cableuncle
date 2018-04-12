@@ -112,14 +112,15 @@ public class Payment extends MAdeptActivity {
                 // TODO Auto-generated method stub
             }
         });
-        IntentFilter filter = new IntentFilter();
+       /* IntentFilter filter = new IntentFilter();
         filter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
         filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
         filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
-        this.registerReceiver(mReceiver, filter);
+        this.registerReceiver(mReceiver, filter);*/
 
     }
     //The BroadcastReceiver that listens for bluetooth broadcasts
+/*
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -151,6 +152,7 @@ public class Payment extends MAdeptActivity {
             }
         }
     };
+*/
     @Override
     protected void onResume() {
         super.onResume();

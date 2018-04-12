@@ -29,7 +29,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Subscriber ID:"
+                android:text="Customer ID:"
                 android:textColor="@color/blackcolor"
                 android:layout_weight="1"
                 android:textStyle="bold"
@@ -56,7 +56,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Subscriber Name:"
+                android:text="Customer Name:"
                 android:textColor="@color/blackcolor"
                 android:layout_weight="1"
                 android:textStyle="bold"
@@ -158,19 +158,20 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:background="@color/redColor"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@color/redColor">
+            android:layout_marginTop="12dp">
 
             <Button
                 android:id="@+id/firstButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textColor="@color/blackcolor"
+                android:textColor="@color/whitecolor"
                 android:text="Cancel "
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:layout_margin="2dp"
+                android:background="@color/redColor"
                 android:gravity="center"
                 android:textSize="22dp"
                 android:padding="12dp"
@@ -180,8 +181,9 @@
                 android:id="@+id/secondButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textColor="@color/blackcolor"
+                android:textColor="@color/whitecolor"
                 android:text="Confirm"
+                android:background="@color/redColor"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_weight="1"

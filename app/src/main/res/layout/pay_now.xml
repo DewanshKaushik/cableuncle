@@ -96,7 +96,7 @@
                 android:layout_marginRight="12dp"
                 android:background="@color/appColor"
                 android:padding="12dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -128,7 +128,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:background="@color/redColor"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -144,7 +144,7 @@
                     android:layout_gravity="left"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="Subscriber ID:"
+                    android:text="Customer ID:"
                     android:textColor="@color/blackcolor"
                     android:textSize="17dp" />
 
@@ -288,6 +288,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
+                android:onClick="changePhone"
                 android:background="@color/appColor"
                 android:padding="12dp">
 
@@ -311,13 +312,13 @@
                     android:textColor="@color/blackcolor"
                     android:textSize="17dp" />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_marginLeft="5dp"
-                    android:background="@null"
-                    android:onClick="changePhone"
-                    android:text="edit" />
+                    android:visibility="visible"
+                    android:background="@drawable/pencil"
+                    />
             </LinearLayout>
 
             <ImageView
@@ -722,6 +723,7 @@
                 android:capitalize="none"
                 android:onClick="payNow"
                 android:text="Pay Now"
+                android:layout_marginBottom="12dp"
                 android:textColor="@color/whitecolor"
                 android:textSize="23dp" />
 

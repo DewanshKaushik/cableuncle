@@ -20,6 +20,8 @@ public class CableUncleApplication extends Application {
     public ArrayList<String> areaList=new ArrayList<>();
     public String selectedArea;
     public String previousBalance;
+    public String previousBasics;
+    public String previousTotalAmount;
 
     public DeviceBluetoothCommunication bluetoothCommunication;
     public BluetoothDevice device;

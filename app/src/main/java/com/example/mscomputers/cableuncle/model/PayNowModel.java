@@ -43,6 +43,7 @@ public class PayNowModel extends MAdeptModel implements Serializable {
     public int cheque_no;
     public int dueBalance;
 
+    public int paid_amount;
     public String balance;
     public String basic;
     public int total;
