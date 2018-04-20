@@ -255,7 +255,7 @@ public class Complaint extends FragmentActivity implements ActionBar.TabListener
 
 
     public void goToNext(View v) {
-        Intent i = new Intent(this, TotalCollectionReport.class);
-        startActivity(i);
+      /*  Intent i = new Intent(this, TotalCollectionReport.class);
+        startActivity(i);*/
     }
 }

@@ -4,11 +4,13 @@ package com.example.mscomputers.cableuncle.parser;
 import android.util.Log;
 
 import com.example.mscomputers.cableuncle.CableUncleApplication;
+import com.example.mscomputers.cableuncle.Login;
 import com.example.mscomputers.cableuncle.model.DashboardModel;
+import com.example.mscomputers.cableuncle.model.LastTransactionModel;
 import com.example.mscomputers.cableuncle.model.LoginModel;
 import com.example.mscomputers.cableuncle.model.PayNowModel;
 import com.example.mscomputers.cableuncle.model.PaymentModel;
-import com.example.mscomputers.cableuncle.model.TotalCollectionModel;
+import com.example.mscomputers.cableuncle.model.TotalCollectionReportModel;
 import com.example.mscomputers.cableuncle.model.UserModel;
 import com.example.mscomputers.cableuncle.util.Constants;
 import com.madept.core.model.MAdeptModel;
@@ -44,8 +46,8 @@ public class JSONParser extends MAdeptJSonParser {
                 return processDashboardJson(json);
             case Constants.PAYMENT_REQUEST:
                 return processPaymentJson(json);
-            case Constants.TOTAL_COLLECTION_REQUEST:
-                return processTotalCollectionJson(json);
+            case Constants.LAST_TRANSACTION_REQUEST:
+                return processLastTransactionJson(json);
             case Constants.USER_REQUEST:
                 return processUserJson(json);
             case Constants.FORGET_PASS_REQUEST:
@@ -64,6 +66,33 @@ public class JSONParser extends MAdeptJSonParser {
                 return processSubmitPaymentJson(json);
             case Constants.GET_AREA:
                 return processGetAreaJson(json);
+            case Constants.GET_TOTAL_COLLECTION_REPORT:
+                return processTotalCollectionJson(json);
+        }
+        return null;
+    }
+
+    public TotalCollectionReportModel processTotalCollectionJson(String json){
+        Log.e("processTotalCollectionJson", json);
+        try {
+            JSONObject obj = new JSONObject(json);
+            TotalCollectionReportModel lm = new TotalCollectionReportModel();
+            boolean status = obj.getBoolean("status");
+
+            if (status) {
+                lm.totalCash=obj.getInt("total_cash");
+                lm.totalCheque=obj.getInt("total_cheque");
+                lm.otherTotal=obj.getInt("other_total");
+                lm.grandTotal=obj.getInt("grand_total");
+
+            } else {
+                lm.setError(true);
+                lm.setErrorMessage("error");
+            }
+
+            return lm;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -472,12 +501,12 @@ public class JSONParser extends MAdeptJSonParser {
 */
 
 
-    public TotalCollectionModel processTotalCollectionJson(String json) {
-        Log.e("processTotalCollectionJson", json);
+    public LastTransactionModel processLastTransactionJson(String json) {
+        Log.e("processLastTransactionJson", json);
 
         try {
             JSONObject obj = new JSONObject(json);
-            TotalCollectionModel lm = new TotalCollectionModel();
+            LastTransactionModel lm = new LastTransactionModel();
             boolean status = obj.getBoolean("status");
 
             if (status) {

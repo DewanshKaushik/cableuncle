@@ -5,7 +5,7 @@ import com.madept.core.model.MAdeptModel;
 /**
  * Created by MS Computers on 3/20/2018.
  */
-public class TotalCollectionModel extends MAdeptModel {
+public class LastTransactionModel extends MAdeptModel {
 
     public String msg;
     public String id;
