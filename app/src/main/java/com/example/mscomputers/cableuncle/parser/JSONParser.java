@@ -74,6 +74,7 @@ public class JSONParser extends MAdeptJSonParser {
 
     public TotalCollectionReportModel processTotalCollectionJson(String json){
         Log.e("processTotalCollectionJson", json);
+
         try {
             JSONObject obj = new JSONObject(json);
             TotalCollectionReportModel lm = new TotalCollectionReportModel();

@@ -22,16 +22,19 @@ import android.widget.Toast;
 import com.example.mscomputers.cableuncle.CableUncleApplication;
 import com.example.mscomputers.cableuncle.Printing.Maestro;
 import com.example.mscomputers.cableuncle.model.PayNowModel;
+import com.example.mscomputers.cableuncle.model.TotalCollectionReportModel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import mmsl.DeviceUtility.DeviceBluetoothCommunication;
 
@@ -77,55 +80,9 @@ public class Util {
         return bm;
     }
 
-    public static String setImage(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-        String base64String = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
-
-        try {
-            byteArrayOutputStream.close();
-            byteArrayOutputStream.flush();
-            byteArrayOutputStream = null;
-            byteArray = null;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return base64String;
-    }
-
-    public static boolean isNetworkAvailable(Context act) {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) act.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
-    public static ArrayList<String> getSeparatedUris(String ids) {
-        String[] batchesCatSubCat = ids.split(",");
-        ArrayList<String> separatedUris = new ArrayList<>();
-
-        for (int i = 0; i < batchesCatSubCat.length; i++) {
-            // String myUri = Uri.parse(batchesCatSubCat[i]);
-            String myUri = batchesCatSubCat[i];
-            separatedUris.add(myUri);
-
-        }
-        return separatedUris;
-    }
-
-
-    public static Bitmap convertFilePathtoBitmap(String filePath) {
-        File image = new File(filePath);
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inSampleSize = 5;
-        Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(), bmOptions);
-        bitmap = Bitmap.createScaledBitmap(bitmap, 800, 800, true);
-        return bitmap;
-
+    public static String getTodayDate(){
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        return date;
     }
 
     public static void showToast(Context ctx, String message) {
@@ -152,24 +109,6 @@ public class Util {
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
-
-/*
-    public String getDate() {
-
-        try {
-            String dateStr = "04/05/2010";
-
-            SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
-            Date dateObj = curFormater.parse(dateStr);
-            SimpleDateFormat postFormater = new SimpleDateFormat("MMMM dd, yyyy");
-
-            String newDateStr = postFormater.format(dateObj);
-        } catch (Exception e) {
-
-        }
-
-    }
-*/
 
     public static String getReceiptNO() {
         String date = null;
@@ -214,6 +153,68 @@ public class Util {
         }
         return date;
     }
+
+    public static String getCountOfDays(String createdDateString, String expireDateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+        Date createdConvertedDate = null, expireCovertedDate = null, todayWithZeroTime = null;
+        try {
+            createdConvertedDate = dateFormat.parse(createdDateString);
+            expireCovertedDate = dateFormat.parse(expireDateString);
+
+            Date today = new Date();
+
+            todayWithZeroTime = dateFormat.parse(dateFormat.format(today));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        int cYear = 0, cMonth = 0, cDay = 0;
+
+        if (createdConvertedDate.after(todayWithZeroTime)) {
+            Calendar cCal = Calendar.getInstance();
+            cCal.setTime(createdConvertedDate);
+            cYear = cCal.get(Calendar.YEAR);
+            cMonth = cCal.get(Calendar.MONTH);
+            cDay = cCal.get(Calendar.DAY_OF_MONTH);
+
+        } else {
+            Calendar cCal = Calendar.getInstance();
+            cCal.setTime(todayWithZeroTime);
+            cYear = cCal.get(Calendar.YEAR);
+            cMonth = cCal.get(Calendar.MONTH);
+            cDay = cCal.get(Calendar.DAY_OF_MONTH);
+        }
+
+
+    /*Calendar todayCal = Calendar.getInstance();
+    int todayYear = todayCal.get(Calendar.YEAR);
+    int today = todayCal.get(Calendar.MONTH);
+    int todayDay = todayCal.get(Calendar.DAY_OF_MONTH);
+    */
+
+        Calendar eCal = Calendar.getInstance();
+        eCal.setTime(expireCovertedDate);
+
+        int eYear = eCal.get(Calendar.YEAR);
+        int eMonth = eCal.get(Calendar.MONTH);
+        int eDay = eCal.get(Calendar.DAY_OF_MONTH);
+
+        Calendar date1 = Calendar.getInstance();
+        Calendar date2 = Calendar.getInstance();
+
+        date1.clear();
+        date1.set(cYear, cMonth, cDay);
+        date2.clear();
+        date2.set(eYear, eMonth, eDay);
+
+        long diff = date2.getTimeInMillis() - date1.getTimeInMillis();
+
+        float dayCount = (float) diff / (24 * 60 * 60 * 1000);
+
+        return ("" + (int) dayCount + " Days");
+    }
+
 
     public static double getRoundDigit(double a){
         double roundOff = Math.round(a * 100.0) / 100.0;
@@ -430,6 +431,73 @@ public class Util {
             activity.startActivity(intent);
             activity.finish();*/
         }
+    }
+
+
+
+    public static void printTotalCollectionData(Activity activity,DeviceBluetoothCommunication bluetoothCommunication,TotalCollectionReportModel totalCollectionReportModel){
+        if (totalCollectionReportModel == null) {
+            Toast.makeText(activity, "No Data", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (bluetoothCommunication == null) {
+            Toast.makeText(activity, "Printer not connected", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String data = "Invoice Cum Receipt";
+        String d = "____________________________";
+        try {
+            FontStyleVal &= 0xFC;
+            bluetoothCommunication.setPrinterFont(FontStyleVal);
+
+            Util.printMaestroLine(bluetoothCommunication,data);
+
+            Util.printMaestroLine(bluetoothCommunication,d);
+
+            String date = "Date: " + Util.getTodayDate();
+            String finalDate = Util.cutStringsecond(date);
+            Util.printMaestroLine(bluetoothCommunication,finalDate);
+            Log.e("Date", finalDate);
+
+            String days = "Days: " + totalCollectionReportModel.days;
+            String finalDays = Util.cutStringsecond(days);
+            Util.printMaestroLine(bluetoothCommunication,finalDays);
+            Log.e("Days", finalDays);
+
+            String cash = "Cash: " + totalCollectionReportModel.totalCash;
+            String finalCash = Util.cutStringsecond(cash);
+            Util.printMaestroLine(bluetoothCommunication,finalCash);
+            Log.e("Cash", finalCash);
+
+            String cheque = "Cheque: " + totalCollectionReportModel.totalCheque;
+            String finalCheque = Util.cutStringsecond(cheque);
+            Util.printMaestroLine(bluetoothCommunication,finalCheque);
+            Log.e("Cheque", finalCheque);
+
+            String other = "Other charges: " + totalCollectionReportModel.otherTotal;
+            String finalOther= Util.cutStringsecond(other);
+            Util.printMaestroLine(bluetoothCommunication,finalOther);
+            Log.e("Other charges", finalOther);
+
+            String grandTotal = "Grand total: " + totalCollectionReportModel.grandTotal;
+            String finalGrandTotal= Util.cutStringsecond(grandTotal);
+            Util.printMaestroLine(bluetoothCommunication,finalGrandTotal);
+            Log.e("Grand total", finalGrandTotal);
+
+            Util.printMaestroLine(bluetoothCommunication,"  ");
+
+            //footer
+            bluetoothCommunication.LineFeed();
+            bluetoothCommunication.LineFeed();
+            bluetoothCommunication.LineFeed();
+
+
+        } catch (Exception e) {
+            if (e.getMessage().contains("socket closed"))
+                Toast.makeText(activity, "Printer not connected", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 

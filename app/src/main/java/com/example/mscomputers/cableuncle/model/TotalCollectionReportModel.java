@@ -2,12 +2,15 @@ package com.example.mscomputers.cableuncle.model;
 
 import com.madept.core.model.MAdeptModel;
 
+import java.io.Serializable;
+
 /**
  * Created by Krishan Kumar on 20-04-2018.
  */
 
-public class TotalCollectionReportModel  extends MAdeptModel{
+public class TotalCollectionReportModel  extends MAdeptModel implements Serializable {
 
+    public String days;
     public int totalCash;
     public int totalCheque;
     public int otherTotal;

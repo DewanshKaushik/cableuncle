@@ -95,6 +95,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:background="@color/appColor"
+                android:weightSum="2"
                 android:padding="12dp"
                 android:visibility="visible">
 
@@ -110,15 +111,14 @@
 
                 <TextView
                     android:id="@+id/customerName"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text=""
+                    android:layout_weight="1"
                     android:textColor="@color/blackcolor"
                     android:textSize="17dp" />
-
 
             </LinearLayout>
 

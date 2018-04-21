@@ -417,7 +417,7 @@ public class PayNow extends MAdeptActivity {
 
         if(communication==null){
             Intent intent = new Intent(PayNow.this, Maestro.class);
-          //  intent.putExtra("foundedDeviceAddress", foundedDeviceAddress);
+            intent.putExtra("from", "paynow");
             intent.putExtra("payNowModelData", payNowModelData);
             startActivity(intent);
         }else{

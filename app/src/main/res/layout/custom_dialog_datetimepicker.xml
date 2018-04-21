@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/white"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/okButton"
+        android:layout_width="100.0dip"
+        android:layout_height="50.0dip"
+        android:layout_marginBottom="2.0dip"
+        android:layout_marginTop="1.0dip"
+        android:background="@color/redColor"
+        android:onClick="performOk"
+        android:text="Ok"
+        android:textColor="@android:color/white"
+        android:textSize="25.0dip" />
+</LinearLayout>
