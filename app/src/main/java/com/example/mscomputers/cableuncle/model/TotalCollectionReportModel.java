@@ -15,6 +15,8 @@ public class TotalCollectionReportModel  extends MAdeptModel implements Serializ
     public int totalCheque;
     public int otherTotal;
     public int grandTotal;
+    public String fromDateAndTimeString;
+    public String toDateAndTimeString;
 
 
     /*

@@ -146,6 +146,23 @@ public class TotalCollectionReport extends MAdeptActivity {
             if ((paramInt1 == FROM_DATE_AND_TIME_STRING) && (paramInt2 == -1)) {
                 this.fromDateAndTimeString = paramIntent.getStringExtra("dateTimeString");
                 this.fromDate.setText(this.fromDateAndTimeString);
+
+                if(fromDateAndTimeString.equalsIgnoreCase("")){
+                    MAdeptUtil.showToast(TotalCollectionReport.this,"Please select From Date");
+                    return;
+                }else if(toDateAndTimeString.equalsIgnoreCase("")){
+                    MAdeptUtil.showToast(TotalCollectionReport.this,"Please select To Date");
+                    return;
+                }
+
+                totalDays.setText(Util.getCountOfDays(fromDateAndTimeString,toDateAndTimeString));
+                days=Util.getCountOfDays(fromDateAndTimeString,toDateAndTimeString);
+
+                totalCollectionReportModel.fromDateAndTimeString=fromDateAndTimeString;
+
+                getData();
+
+
             }
             if ((paramInt1 == TO_DATE_AND_TIME_STRING) && (paramInt2 == -1)) {
                 this.toDateAndTimeString = paramIntent.getStringExtra("dateTimeString");
@@ -161,6 +178,9 @@ public class TotalCollectionReport extends MAdeptActivity {
                 }
                 totalDays.setText(Util.getCountOfDays(fromDateAndTimeString,toDateAndTimeString));
                 days=Util.getCountOfDays(fromDateAndTimeString,toDateAndTimeString);
+
+                totalCollectionReportModel.toDateAndTimeString=toDateAndTimeString;
+
                 getData();
 
             }

@@ -180,7 +180,7 @@ public class Util {
 
         } else {
             Calendar cCal = Calendar.getInstance();
-            cCal.setTime(todayWithZeroTime);
+            cCal.setTime(createdConvertedDate);
             cYear = cCal.get(Calendar.YEAR);
             cMonth = cCal.get(Calendar.MONTH);
             cDay = cCal.get(Calendar.DAY_OF_MONTH);
@@ -454,6 +454,16 @@ public class Util {
             Util.printMaestroLine(bluetoothCommunication,data);
 
             Util.printMaestroLine(bluetoothCommunication,d);
+
+            String fromDate = "From Date: " + totalCollectionReportModel.fromDateAndTimeString;
+            String finalFromDate = Util.cutStringsecond(fromDate);
+            Util.printMaestroLine(bluetoothCommunication,finalFromDate);
+            Log.e("From Date", finalFromDate);
+
+            String toDate = "To Date: " + totalCollectionReportModel.toDateAndTimeString;
+            String finalToDate = Util.cutStringsecond(toDate);
+            Util.printMaestroLine(bluetoothCommunication,finalToDate);
+            Log.e("To Date", finalToDate);
 
             String date = "Date: " + Util.getTodayDate();
             String finalDate = Util.cutStringsecond(date);

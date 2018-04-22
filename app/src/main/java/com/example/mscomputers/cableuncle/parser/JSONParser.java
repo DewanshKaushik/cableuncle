@@ -190,7 +190,6 @@ public class JSONParser extends MAdeptJSonParser {
                 lm.payment_mode= obj1.getString("payment_mode");
                 lm.cheque_no= obj1.getInt("cheque_no");
                 lm.remark= obj1.getString("remark");
-
             } else {
                 lm.setError(true);
                 lm.setErrorMessage("error");
