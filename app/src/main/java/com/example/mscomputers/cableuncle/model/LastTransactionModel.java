@@ -2,12 +2,38 @@ package com.example.mscomputers.cableuncle.model;
 
 import com.madept.core.model.MAdeptModel;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 /**
  * Created by MS Computers on 3/20/2018.
  */
-public class LastTransactionModel extends MAdeptModel {
+public class LastTransactionModel extends MAdeptModel implements Serializable{
 
-    public String msg;
+    public String company_name;
+    public String lco_address;
+    public String complain_no_1;
+    public String complain_no_2;
+    public String customer_name;
+    public String comp_id;
+    public String adress;
+    public String phone;
+    public String no_of_connection;
+    public String package_price;
+    public String other_charges;
+    public String igst;
+    public String cgst;
+    public String total_amount;
+    public String panding_amount;
+    public String date;
+    public String pay_mode;
+    public String invoice;
+    public String remark;
+
+
+    public ArrayList<LastTransactionModel> lastTransactionModelArrayList=new ArrayList<>();
+
+/*    public String msg;
     public String id;
     public String get_id;
     public String dev_id;
@@ -32,7 +58,7 @@ public class LastTransactionModel extends MAdeptModel {
  //   public String msg;
 
 
-   /*
+
     * 1{"status":true,
     * "msg":"Data found",
     * "data":[{"id":"485",

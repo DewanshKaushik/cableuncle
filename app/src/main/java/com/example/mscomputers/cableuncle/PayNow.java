@@ -44,7 +44,7 @@ import mmsl.DeviceUtility.DeviceBluetoothCommunication;
  * Created by MS Computers on 1/7/2018.
  */
 public class PayNow extends MAdeptActivity {
-    TextView lcoName, customerName, subscriberId, noOfTv, mobileNumber, balanceAmount, basics, total,paidAmount;
+    TextView lcoName, customerName, subscriberId, noOfTv, mobileNumber, balanceAmount, basics, total,paidAmount,customerAddress;
     String subscriberIdd;
     PayNowModel payNowModelData;
     LinearLayout bankLayout,chequeLayout;
@@ -74,6 +74,7 @@ public class PayNow extends MAdeptActivity {
         chequeNumber= (EditText) findViewById(R.id.chequeNumber);
         radioGroup= (RadioGroup) findViewById(R.id.radioGroup);
 
+        customerAddress = (TextView) findViewById(R.id.customerAddress);
         paidAmount= (TextView) findViewById(R.id.paidAmount);
         bankLayout= (LinearLayout) findViewById(R.id.bankLayout);
         chequeLayout= (LinearLayout) findViewById(R.id.chequeLayout);
@@ -161,6 +162,7 @@ public class PayNow extends MAdeptActivity {
         basics.setText(model.basic + "");
         total.setText(model.total + "");
         paidAmount.setText(model.total+"");
+        customerAddress.setText(model.cus_addresss+"");
 
         CableUncleApplication.getInstance().previousBalance=model.balance+"";
         CableUncleApplication.getInstance().previousBasics=model.basic+"";

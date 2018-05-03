@@ -19,6 +19,7 @@ import com.example.mscomputers.cableuncle.CableUncleApplication;
 import com.example.mscomputers.cableuncle.R;
 import com.example.mscomputers.cableuncle.aem.PrintActivity;
 import com.example.mscomputers.cableuncle.maestro.microatm.DeviceListActivity;
+import com.example.mscomputers.cableuncle.model.LastTransactionModel;
 import com.example.mscomputers.cableuncle.model.PayNowModel;
 import com.example.mscomputers.cableuncle.model.TotalCollectionReportModel;
 import com.example.mscomputers.cableuncle.util.Util;
@@ -44,6 +45,7 @@ public class Maestro extends MAdeptActivity implements DeviceCallBacks {
  //   String foundedDeviceAddress;
     TotalCollectionReportModel    totalCollectionReportModel;
     String from;
+    LastTransactionModel transactionModels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,8 @@ public class Maestro extends MAdeptActivity implements DeviceCallBacks {
 
         if(from.equalsIgnoreCase("totalcollectionreport")){
             totalCollectionReportModel = (TotalCollectionReportModel) getIntent().getSerializableExtra("totalCollectionReportModel");
+        }else if(from.equalsIgnoreCase("lastTransaction")){
+            transactionModels = (LastTransactionModel) getIntent().getSerializableExtra("transactionModels");
         }else{
             payNowModelData = (PayNowModel) getIntent().getSerializableExtra("payNowModelData");
         }
@@ -225,6 +229,8 @@ public class Maestro extends MAdeptActivity implements DeviceCallBacks {
         Toast.makeText(Maestro.this, "Printing " + 2 + " Character/Line Bill", Toast.LENGTH_SHORT).show();
         if(from.equalsIgnoreCase("totalcollectionreport")){
             Util.printTotalCollectionData(Maestro.this,CableUncleApplication.getInstance().bluetoothCommunication,totalCollectionReportModel);
+        }else if(from.equalsIgnoreCase("lastTransaction")){
+            Util.printBillForLastTransaction(Maestro.this,CableUncleApplication.getInstance().bluetoothCommunication,transactionModels);
         }else{
             Util.printBill(Maestro.this,CableUncleApplication.getInstance().bluetoothCommunication,payNowModelData);
         }

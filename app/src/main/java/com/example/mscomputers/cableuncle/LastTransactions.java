@@ -2,6 +2,8 @@ package com.example.mscomputers.cableuncle;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -15,33 +17,116 @@ import android.view.Window;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.mscomputers.cableuncle.Printing.Maestro;
 import com.example.mscomputers.cableuncle.adp.PaymentAdapter;
 import com.example.mscomputers.cableuncle.adp.UserAdapter;
+import com.example.mscomputers.cableuncle.model.LastTransactionModel;
+import com.example.mscomputers.cableuncle.model.LoginModel;
 import com.example.mscomputers.cableuncle.model.PaymentHistoryModel;
 import com.example.mscomputers.cableuncle.model.UserModel;
+import com.example.mscomputers.cableuncle.parser.JSONParser;
+import com.example.mscomputers.cableuncle.util.Constants;
+import com.example.mscomputers.cableuncle.util.Util;
+import com.madept.core.activity.MAdeptActivity;
+import com.madept.core.net.MAdeptErrorResponse;
+import com.madept.core.net.MAdeptRequest;
+import com.madept.core.net.MAdeptResponse;
+import com.madept.core.net.MAdeptResponseListener;
+import com.madept.core.prefs.MAdeptPrefs;
+import com.madept.core.util.MAdeptUtil;
 
 import java.util.ArrayList;
+
+import mmsl.DeviceUtility.DeviceBluetoothCommunication;
 
 /**
  * Created by MS Computers on 12/16/2017.
  */
-public class LastTransactions extends FragmentActivity implements ActionBar.TabListener {
+public class LastTransactions extends MAdeptActivity implements ActionBar.TabListener {
 
     ViewPager mViewPager;
     AppSectionsPagerAdapter mAppSectionsPagerAdapter;
+    ListView listView;
+    ArrayList<LastTransactionModel> transactionModels;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.last_transactions);
+        listView = (ListView) findViewById(R.id.listView);
 
-        setUpActionBar();
+      //  setUpActionBar();
 
-
+        getData();
 
     }
 
+    public void getData(){
+            MAdeptPrefs.getInstance(LastTransactions.this).loadPrefs();
+
+            MAdeptRequest req = new MAdeptRequest(Constants.LAST_TRANSACTION_REQUEST, this, Constants.GET_LAST_TRANSACTION_URL, MAdeptRequest.METHOD_POST);
+            req.setJSONParser(JSONParser.getInstance());
+            req.addParam("getid", MAdeptPrefs.getInstance(LastTransactions.this).getPrefs(Constants.UNIQUE_ID));
+            req.addParam("lco", MAdeptPrefs.getInstance(LastTransactions.this).getPrefs(Constants.LCO));
+
+            req.processForData(new MAdeptResponseListener() {
+                @Override
+                public void onResponse(final MAdeptResponse resp) {
+                    LastTransactions.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (resp.isError())// Handle error code
+                            {
+                                if (resp instanceof MAdeptErrorResponse) {
+                                    MAdeptErrorResponse error = (MAdeptErrorResponse) resp;
+                                    MAdeptUtil.showToast(LastTransactions.this, error.getErrorMessage());
+                                } else {
+                                    MAdeptUtil.showToast(LastTransactions.this, resp.dataModel.getErrorMessage());
+                                }
+
+                            } else {
+                                final LastTransactionModel data = (LastTransactionModel) resp.dataModel;
+                                if (data != null) {
+                                    transactionModels=data.lastTransactionModelArrayList;
+                                    setData(data.lastTransactionModelArrayList);
+                                   // setSpinner();
+
+                                }
+                            }
+                        }
+                    });
+
+                }
+
+            });
+
+    }
+
+    public void setData(ArrayList<LastTransactionModel> lastTransactionModelArrayList){
+        UserAdapter adapter=new UserAdapter(LastTransactions.this,lastTransactionModelArrayList);
+
+        listView.setAdapter(adapter);
+    }
+
+    public void printBill(int position){
+        DeviceBluetoothCommunication communication=CableUncleApplication.getInstance().bluetoothCommunication;
+        BluetoothDevice device=CableUncleApplication.getInstance().device;
+
+        if(communication==null){
+            Intent intent = new Intent(LastTransactions.this, Maestro.class);
+            intent.putExtra("from", "lastTransaction");
+            intent.putExtra("transactionModels", transactionModels.get(position));
+            startActivity(intent);
+        }else{
+            Util.printBillForLastTransaction(LastTransactions.this,communication,transactionModels.get(position));
+        }
+        finish();
+    }
+
+
+/*
     public void setUpActionBar() {
         // Create the adapter that will return a fragment for each of the three primary sections
         // of the app.
@@ -82,6 +167,7 @@ public class LastTransactions extends FragmentActivity implements ActionBar.TabL
                             .setTabListener(this));
         }
     }
+*/
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one of the primary
@@ -99,7 +185,7 @@ public class LastTransactions extends FragmentActivity implements ActionBar.TabL
                 case 0:
                     // The first section of the app is the most interesting -- it offers
                     // a launchpad into the other demonstrations in this example application.
-                    return new UserFragment();
+                 //   return new UserFragment();
 
                 case 1:
                     return new SubscriberFragment();
@@ -136,6 +222,7 @@ public class LastTransactions extends FragmentActivity implements ActionBar.TabL
         }
     }
 
+/*
     public static class UserFragment extends Fragment {
 
         @Override
@@ -160,6 +247,7 @@ public class LastTransactions extends FragmentActivity implements ActionBar.TabL
             return rootView;
         }
     }
+*/
 
     public static class SubscriberFragment extends Fragment {
 
@@ -215,4 +303,11 @@ public class LastTransactions extends FragmentActivity implements ActionBar.TabL
             return rootView;
         }
     }
+
+    /*
+    * http://cableuncle.in/cableuncle/android/last_6_transation.php
+
+        getid = 9990502
+        lco= 99905
+        */
 }

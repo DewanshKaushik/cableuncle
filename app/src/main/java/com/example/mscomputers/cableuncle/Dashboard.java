@@ -222,6 +222,7 @@ public class Dashboard extends MAdeptActivity implements DrawerLayout.DrawerList
         View v = inflate.inflate(R.layout.drawer_layout, null);
         TextView logout = (TextView) v.findViewById(R.id.logout);
         TextView totalCollectionReport = (TextView) v.findViewById(R.id.totalCollectionReport);
+        TextView lastTransactions = (TextView) v.findViewById(R.id.lastTransactions);
 
         logout.setOnClickListener(new View.OnClickListener() {
 
@@ -237,6 +238,15 @@ public class Dashboard extends MAdeptActivity implements DrawerLayout.DrawerList
             public void onClick(View v) {
                 closeDrawerLayout(dl, linearLayout);
                 Intent i = new Intent(Dashboard.this, TotalCollectionReport.class);
+                startActivity(i);
+            }
+        });
+
+        lastTransactions.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                closeDrawerLayout(dl, linearLayout);
+                Intent i = new Intent(Dashboard.this, LastTransactions.class);
                 startActivity(i);
             }
         });

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.mscomputers.cableuncle.CableUncleApplication;
 import com.example.mscomputers.cableuncle.Printing.Maestro;
+import com.example.mscomputers.cableuncle.model.LastTransactionModel;
 import com.example.mscomputers.cableuncle.model.PayNowModel;
 import com.example.mscomputers.cableuncle.model.TotalCollectionReportModel;
 
@@ -432,6 +433,187 @@ public class Util {
             activity.finish();*/
         }
     }
+
+
+    public static void printBillForLastTransaction(Activity activity,DeviceBluetoothCommunication bluetoothCommunication,LastTransactionModel transactionModel) {
+        if (transactionModel == null) {
+            Toast.makeText(activity, "No Data", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (bluetoothCommunication == null) {
+            Toast.makeText(activity, "Printer not connected", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String data = "Invoice Cum Receipt";
+        String d = "____________________________";
+        try {
+            FontStyleVal &= 0xFC;
+            bluetoothCommunication.setPrinterFont(FontStyleVal);
+
+            Util.printMaestroLine(bluetoothCommunication,data);
+
+            Util.printMaestroLine(bluetoothCommunication,d);
+
+
+            String lcoName = "Lco Name: " + transactionModel.company_name;
+            String finalLcoName = Util.cutStringsecond(lcoName);
+            Util.printMaestroLine(bluetoothCommunication,finalLcoName);
+            Log.e("finalLcoName", finalLcoName);
+
+            String lcoComplain = "Complain No: " + transactionModel.complain_no_1;
+            String finalComplain = Util.cutStringforComplainNo(lcoComplain);
+            Util.printMaestroLine(bluetoothCommunication,finalComplain);
+            Log.e("Complain No", finalComplain);
+
+            Util.printMaestroLine(bluetoothCommunication,d);
+
+            String customerName = "Customer Name: " + transactionModel.customer_name;
+            String finalCustomerName = Util.cutStringsecond(customerName);
+            Util.printMaestroLine(bluetoothCommunication,finalCustomerName);
+            Log.e("Customer Name ", finalCustomerName);
+
+            String subscriberName = "Customer Id: " + transactionModel.comp_id;
+            String finalSubscriberName = Util.cutStringsecond(subscriberName);
+            Util.printMaestroLine(bluetoothCommunication,finalSubscriberName);
+            Log.e("Customer Id:", finalSubscriberName);
+
+            String address = "Address: " + transactionModel.adress;
+            String finalAddress = Util.cutStringsecond(address);
+            Util.printMaestroLine(bluetoothCommunication,finalAddress);
+            Log.e("Address:", finalAddress);
+
+            String mobileNumber = "Mobile Number: " + transactionModel.phone;
+            String finalMobileNumber = Util.cutStringsecond(mobileNumber);
+            Util.printMaestroLine(bluetoothCommunication,finalMobileNumber);
+            Log.e("Mobile Number", finalMobileNumber);
+
+            String noOfTv = "No of Tv's: " + transactionModel.no_of_connection;
+            String finalNoOfTv = Util.cutStringsecond(noOfTv);
+            Util.printMaestroLine(bluetoothCommunication,finalNoOfTv);
+            Log.e("No of Tvs:", finalNoOfTv);
+
+            Util.printMaestroLine(bluetoothCommunication,d);
+
+            String packagePrice= "Package Price: " + transactionModel.package_price;
+            String finalpackagePrice= Util.cutStringsecond(packagePrice);
+            Util.printMaestroLine(bluetoothCommunication,finalpackagePrice);
+            Log.e("Package Price: ", finalpackagePrice);
+
+            String previousBalance = "Prev Balance: " + CableUncleApplication.getInstance().previousBalance;
+            String finalPreviousBalance = Util.cutStringsecond(previousBalance);
+            Util.printMaestroLine(bluetoothCommunication,finalPreviousBalance);
+            Log.e("Prev Balance: ", finalPreviousBalance);
+
+            String Total = "Total: " + transactionModel.total_amount;
+            String finalTotal = Util.cutStringsecond(Total);
+            Util.printMaestroLine(bluetoothCommunication,finalTotal);
+            Log.e("Total: ", finalTotal);
+
+            Util.printMaestroLine(bluetoothCommunication,d);
+
+           /* String basics = "Basic Amt: " + transactionModel.other_charges;
+            String finalBasics = Util.cutStringsecond(basics);
+            Util.printMaestroLine(bluetoothCommunication,finalBasics);
+            Log.e("Basic Amt: ", finalBasics);*/
+
+            String addCharges = "Addn Charges: " + transactionModel.other_charges;
+            String finalAddCharges = Util.cutStringsecond(addCharges);
+            Util.printMaestroLine(bluetoothCommunication,finalAddCharges);
+            Log.e("Addn Charges: ", finalAddCharges);
+
+            String sgst = "SGST: " + transactionModel.igst;
+            String finalSgst = Util.cutStringsecond(sgst);
+            Util.printMaestroLine(bluetoothCommunication,finalSgst);
+            Log.e("SGST: ", finalSgst);
+
+            String cgst = "CGST: " + transactionModel.cgst;
+            String finalCgst = Util.cutStringsecond(cgst);
+            Util.printMaestroLine(bluetoothCommunication,finalCgst);
+            Log.e("CGST: ", finalCgst);
+
+         /*   String total = "Grand Total: " + payNowModelData.total;
+            String finaltotal = Util.cutStringsecond(total);
+            Util.printMaestroLine(bluetoothCommunication,finaltotal);
+            Log.e("Grand Total:", finalTotal);*/
+
+          /*  String amount = "Paid Amount: " + transactionModel.total_amount;
+            String finalAmount = Util.cutStringsecond(amount);
+            Util.printMaestroLine(bluetoothCommunication,finalAmount);
+            Log.e("Paid Amount: ", finalAmount);*/
+
+          /*  String dueBalance = "Due Balance: " + transactionModel.dueBalance;
+            String finalDueBalance = Util.cutStringsecond(dueBalance);
+            Util.printMaestroLine(bluetoothCommunication,finalDueBalance);
+            Log.e("Due Balance:", finalDueBalance);*/
+
+            Util.printMaestroLine(bluetoothCommunication,d);
+
+            String receiptno = "Receipt No: " + transactionModel.invoice;
+            String finalReceiptno = Util.cutStringsecond(receiptno);
+            Util.printMaestroLine(bluetoothCommunication,finalReceiptno);
+            Log.e("Receipt No: ", finalReceiptno);
+
+            String date = "Date: " + transactionModel.date;
+            String finalDate = Util.cutStringsecond(date);
+            Util.printMaestroLine(bluetoothCommunication,finalDate);
+            Log.e("Date: ", finalDate);
+
+            String remark = "Remark: " + transactionModel.remark;
+            String finalRemark = Util.cutStringsecond(remark);
+            Util.printMaestroLine(bluetoothCommunication,finalRemark);
+            Log.e("Remark: ", finalRemark);
+
+            Util.printMaestroLine(bluetoothCommunication,d);
+
+            String pMode = "Payment Mode: " + transactionModel.pay_mode;
+            String finalpMode = Util.cutStringsecond(pMode);
+            Util.printMaestroLine(bluetoothCommunication,finalpMode);
+            Log.e("Payment Mode: ", finalpMode);
+
+          /*  String chequeNo = "Cheque No: " + transactionModel.cheque_no;
+            String finalChequeNo = Util.cutStringsecond(chequeNo);
+            Util.printMaestroLine(bluetoothCommunication,finalChequeNo);
+            Log.e("Cheque No: ", finalChequeNo);*/
+
+            Util.printMaestroLine(bluetoothCommunication,d);
+
+            Util.printMaestroLine(bluetoothCommunication,d);
+
+            String pow = "Powered By CABLEUNCLE";
+            Util.printMaestroLine(bluetoothCommunication,pow);
+
+            String web = "www.cableuncle.in";
+            Util.printMaestroLine(bluetoothCommunication,web);
+
+            String version = "";
+            try {
+                PackageInfo pInfo = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0);
+                version = pInfo.versionName;
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+            String ver = "Version :" + version;
+            Util.printMaestroLine(bluetoothCommunication,ver);
+
+            Util.printMaestroLine(bluetoothCommunication,"  ");
+
+            //footer
+            bluetoothCommunication.LineFeed();
+            bluetoothCommunication.LineFeed();
+            bluetoothCommunication.LineFeed();
+
+
+        } catch (Exception e) {
+            if (e.getMessage().contains("socket closed"))
+                Toast.makeText(activity, "Printer not connected", Toast.LENGTH_SHORT).show();
+          /*  Intent intent = new Intent(activity, Maestro.class);
+            intent.putExtra("payNowModelData", payNowModelData);
+            activity.startActivity(intent);
+            activity.finish();*/
+        }
+    }
+
 
 
 

@@ -97,6 +97,9 @@ public class TotalCollectionReport extends MAdeptActivity {
                                 if (data != null) {
                                     totalCollectionReportModel=data;
                                     totalCollectionReportModel.days=days;
+                                    totalCollectionReportModel.fromDateAndTimeString=fromDateAndTimeString;
+                                    totalCollectionReportModel.toDateAndTimeString=toDateAndTimeString;
+
                                     setData(data);
                                     printButton.setEnabled(true);
                                 }
@@ -158,7 +161,6 @@ public class TotalCollectionReport extends MAdeptActivity {
                 totalDays.setText(Util.getCountOfDays(fromDateAndTimeString,toDateAndTimeString));
                 days=Util.getCountOfDays(fromDateAndTimeString,toDateAndTimeString);
 
-                totalCollectionReportModel.fromDateAndTimeString=fromDateAndTimeString;
 
                 getData();
 
@@ -179,7 +181,6 @@ public class TotalCollectionReport extends MAdeptActivity {
                 totalDays.setText(Util.getCountOfDays(fromDateAndTimeString,toDateAndTimeString));
                 days=Util.getCountOfDays(fromDateAndTimeString,toDateAndTimeString);
 
-                totalCollectionReportModel.toDateAndTimeString=toDateAndTimeString;
 
                 getData();
 

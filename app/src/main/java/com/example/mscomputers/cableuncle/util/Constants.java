@@ -26,6 +26,7 @@ public class Constants {
     public static final int SUBMIT_PAYMENT = 12;
     public static final int GET_AREA = 13;
     public static final int GET_TOTAL_COLLECTION_REPORT = 14;
+    public static final int GET_LAST_TRANSACTION = 15;
 
 
     public static final String TEST_IP_ADDRESS = "192.168.1.36:8000";
@@ -51,7 +52,7 @@ public class Constants {
     public static final String SUBMIT_PAYMENT_URL = "http://www.cableuncle.in/cableuncle/android/payment_submit.php";
     public static final String GET_AREA_URL = "http://www.cableuncle.in/cableuncle/android/area_name.php";
     public static final String GET_TOTAL_COLLECTION_URL = "http://cableuncle.in/cableuncle/android/total_collection_fieldboy.php";
-
+    public static final String GET_LAST_TRANSACTION_URL = "http://cableuncle.in/cableuncle/android/last_6_transation.php";
 
 
 /*

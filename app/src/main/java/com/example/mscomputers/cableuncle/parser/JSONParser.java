@@ -282,7 +282,7 @@ public class JSONParser extends MAdeptJSonParser {
         "total": 300
     }
 }*/
-        Log.e("processPaymentJson", json);
+        Log.e("processPayNowJson", json);
         try {
             JSONObject obj = new JSONObject(json);
             PayNowModel lm = new PayNowModel();
@@ -300,6 +300,7 @@ public class JSONParser extends MAdeptJSonParser {
                 lm.balance = obj1.getString("balance");
                 lm.basic = obj1.getString("basic");
                 lm.total = obj1.getInt("total");
+                lm.cus_addresss = obj1.getString("cus_addresss");
 
 
             } else {
@@ -431,117 +432,58 @@ public class JSONParser extends MAdeptJSonParser {
 
     }
 
-/*
-    public PaymentHistoryModel processPaymentJson(String json) {
-        Log.e("processPaymentJson",json);
-
-        try {
-            JSONObject obj = new JSONObject(json);
-            PaymentHistoryModel lm = new PaymentHistoryModel();
-            boolean status = obj.getBoolean("status");
-
-            if (status) {
-
-                lm.response = obj.getString("response");
-
-                JSONArray array = obj.getJSONArray("data");
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject obj1 = array.getJSONObject(i);
-                    PaymentHistoryModel arrayObject = new PaymentHistoryModel();
-
-                    arrayObject.id = obj1.getString("id");
-                    arrayObject.unique_conn = obj1.getString("unique_conn");
-                    arrayObject.dev_id = obj1.getString("dev_id");
-                    arrayObject.lco_id = obj1.getString("lco_id");
-                    arrayObject.stb_no = obj1.getString("stb_no");
-                    arrayObject.vc_no = obj1.getString("vc_no");
-                    arrayObject.package_name = obj1.getString("package_name");
-                    arrayObject.package_validity = obj1.getString("package_validity");
-                    arrayObject.package_price = obj1.getString("package_price");
-                    arrayObject.bill_start_date = obj1.getString("bill_start_date");
-                    arrayObject.tax = obj1.getString("tax");
-                    arrayObject.pandig_amount = obj1.getString("pandig_amount");
-                    arrayObject.total_amount = obj1.getString("total_amount");
-                    arrayObject.date = obj1.getString("date");
-                    arrayObject.join_date = obj1.getString("join_date");
-                    arrayObject.company_name = obj1.getString("company_name");
-                    arrayObject.customer_name = obj1.getString("customer_name");
-                    arrayObject.gst = obj1.getString("gst");
-                    arrayObject.aadhar = obj1.getString("aadhar");
-                    arrayObject.comp_id = obj1.getString("comp_id");
-                    arrayObject.phone = obj1.getString("phone");
-                    arrayObject.landline = obj1.getString("landline");
-                    arrayObject.email = obj1.getString("email");
-                    arrayObject.adress = obj1.getString("adress");
-                    arrayObject.state = obj1.getString("state");
-                    arrayObject.city = obj1.getString("city");
-                    arrayObject.area_code = obj1.getString("area_code");
-                    arrayObject.pincode = obj1.getString("pincode");
-                    arrayObject.lane = obj1.getString("lane");
-                    arrayObject.society = obj1.getString("society");
-                    arrayObject.builing = obj1.getString("builing");
-                    arrayObject.statusInt = obj1.getString("status");
-                    arrayObject.remark = obj1.getString("remark");
-                    arrayObject.no_of_connection = obj1.getString("no_of_connection");
-
-                    lm.paymentModels.add(arrayObject);
-                }
-
-            } else {
-                lm.setError(true);
-                lm.setErrorMessage("");
-            }
-
-            return lm;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-*/
-
 
     public LastTransactionModel processLastTransactionJson(String json) {
         Log.e("processLastTransactionJson", json);
 
         try {
             JSONObject obj = new JSONObject(json);
-            LastTransactionModel lm = new LastTransactionModel();
+            LastTransactionModel model = new LastTransactionModel();
             boolean status = obj.getBoolean("status");
 
             if (status) {
-                lm.id = obj.getString("id");
-                lm.get_id = obj.getString("get_id");
-                lm.dev_id = obj.getString("dev_id");
-                lm.lco_id = obj.getString("lco_id");
-                lm.payment = obj.getString("payment");
-                lm.pay_mode = obj.getString("pay_mode");
-                lm.account_no = obj.getString("account_no");
-                lm.cheque_no = obj.getString("cheque_no");
-                lm.ifsc = obj.getString("ifsc");
-                lm.other_charges = obj.getString("other_charges");
-                lm.discount = obj.getString("discount");
-                lm.total_amount = obj.getString("total_amount");
-                lm.panding_amount = obj.getString("panding_amount");
-                lm.due_date = obj.getString("due_date");
-                lm.remark = obj.getString("remark");
-                lm.invoice = obj.getString("invoice");
-                lm.link = obj.getString("link");
-                lm.date = obj.getString("date");
-                lm.coming_blance = obj.getString("coming_blance");
+                JSONArray object = obj.getJSONArray("data");
 
+                for (int i = 0; i < object.length(); i++) {
+                    LastTransactionModel lm = new LastTransactionModel();
+                    JSONObject obj3 = object.getJSONObject(i);
+
+                    lm.company_name = obj3.getString("company_name");
+                    lm.lco_address = obj3.getString("lco_address");
+                    lm.complain_no_1 = obj3.getString("complain_no_1");
+                    lm.complain_no_2 = obj3.getString("complain_no_2");
+                    lm.customer_name = obj3.getString("customer_name");
+                    lm.comp_id = obj3.getString("comp_id");
+                    lm.adress = obj3.getString("adress");
+                    lm.phone = obj3.getString("phone");
+                    lm.no_of_connection = obj3.getString("no_of_connection");
+                    lm.package_price = obj3.getString("package_price");
+                    lm.other_charges = obj3.getString("other_charges");
+                    lm.igst = obj3.getString("igst");
+                    lm.cgst = obj3.getString("cgst");
+                    lm.total_amount = obj3.getString("total_amount");
+                    lm.panding_amount = obj3.getString("panding_amount");
+                    lm.date = obj3.getString("date");
+                    lm.pay_mode = obj3.getString("pay_mode");
+                    lm.invoice = obj3.getString("invoice");
+                    lm.remark = obj3.getString("remark");
+
+                    model.lastTransactionModelArrayList.add(lm);
+                }
 
             } else {
-                lm.setError(true);
-                lm.setErrorMessage("");
+                model.setError(true);
+                model.setErrorMessage("");
             }
 
-            return lm;
+            return model;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
+
 
     public UserModel processUserJson(String json) {
         Log.e("processUserJson", json);
@@ -677,237 +619,5 @@ public class JSONParser extends MAdeptJSonParser {
         }
         return null;
     }
-
-/*
-
-    public CategorySubCategoryModel processCategoryJson(String json) {
-
-        try {
-            JSONObject obj = new JSONObject(json);
-            CategorySubCategoryModel lm = new CategorySubCategoryModel();
-            boolean status = obj.getBoolean("status");
-
-            if (status) {
-                JSONArray array = obj.getJSONArray("data");
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject obj1 = array.getJSONObject(i);
-                    CategoryListModel cates = new CategoryListModel();
-                    cates.categoryName = obj1.getString("title");
-                    cates.categoryId = obj1.getString("id");
-                    JSONArray subArray = obj1.getJSONArray("sub_category");
-                    for (int j = 0; j < subArray.length(); j++) {
-                        JSONObject subObj = subArray.getJSONObject(j);
-                        CategoryListModel subCates = new CategoryListModel();
-                        subCates.categoryName = subObj.getString("title");
-                        subCates.categoryId = subObj.getString("id");
-                        cates.subCategories.add(subCates);
-                    }
-                    lm.categories.add(cates);
-                }
-            } else {
-                lm.setError(true);
-                lm.setErrorMessage(obj.getString("message"));
-            }
-
-            return lm;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-    public SectionModel processQuestionJson(String json) {
-
-        try {
-            JSONObject obj = new JSONObject(json);
-            SectionModel model = new SectionModel();
-            boolean status = obj.getBoolean("status");
-
-            if (status) {
-
-                JSONArray batchesArray = obj.getJSONArray("data");
-                    for (int i = 0; i < batchesArray.length(); i++) {
-                        JSONObject queObj = batchesArray.getJSONObject(i);
-                        QuestionModel question = new QuestionModel();
-                        question.quesID = queObj.getInt("id");
-                        question.catId = queObj.getInt("category_id");
-                        question.subCatId = queObj.getInt("sub_cat_id");
-                        question.question = queObj.getString("question");
-                        question.optionA = queObj.getString("option_a");
-                        question.optionB = queObj.getString("option_b");
-                        question.optionC = queObj.getString("option_c");
-                        question.optionD = queObj.getString("option_d");
-                        question.correctAnswer = queObj.getString("correct");
-                        question.catName = queObj.optString("category");
-                        question.subCatName = queObj.optString("subcategory");
-                        question.sectionName = queObj.optString("section");
-                        model.questionModels.add(question);
-                    }
-            } else {
-                model.setError(true);
-                model.setErrorMessage(obj.getString("message"));
-            }
-            return model;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-    public SectionModel processQuestionJsonSecond(String json) {
-
-        try {
-            JSONObject obj = new JSONObject(json);
-            SectionModel model = new SectionModel();
-            boolean status = obj.getBoolean("status");
-
-            if (status) {
-
-                JSONArray questionsArray = obj.getJSONArray("questions");
-                for (int i = 0; i < questionsArray.length(); i++) {
-                    JSONObject obj1 = questionsArray.getJSONObject(i);
-                    SectionModel sectionModel=new SectionModel();
-                  //d  JSONObject questionMark = obj1.getJSONObject("question_mark");
-                    Iterator keys = obj1.keys();
-
-                    while(keys.hasNext()) {
-                        // loop to get the dynamic key
-                        String currentDynamicKey = (String)keys.next();
-                        JSONArray questions= obj1.getJSONArray(currentDynamicKey);
-                        for(int j=0;j<questions.length();j++) {
-                            JSONObject obj2 = questions.getJSONObject(j);
-                            QuestionModel question = new QuestionModel();
-                            question.quesID = obj2.getInt("id");
-                            question.catId = obj2.getInt("category_id");
-                            question.subCatId = obj2.getInt("sub_cat_id");
-                            question.question = obj2.getString("question");
-                            question.optionA = obj2.getString("option_a");
-                            question.optionB = obj2.getString("option_b");
-                            question.optionC = obj2.getString("option_c");
-                            question.optionD = obj2.getString("option_d");
-                            question.correctAnswer = obj2.getString("correct");
-                            question.sectionName = obj2.optString("section");
-
-                            model.questionModels.add(question);
-
-                     //d       sectionModel.questionModels.add(question);
-                        }
-
-                        // get the value of the dynamic key
-                       //d JSONObject currentDynamicValue = questionMark.getJSONObject(currentDynamicKey);
-                        System.out.println();
-                    }
-
-                    //d model.questionsList.add(sectionModel);
-   lm.questions.add(question);
-
-                }
-//d                model.questionsList.add(lm);
-            } else {
-                model.setError(true);
-                model.setErrorMessage(obj.getString("message"));
-            }
-
-            return model;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-    public LoginModel processBatchListJson(String json) {
-
-        try {
-            JSONObject obj = new JSONObject(json);
-            LoginModel blm = new LoginModel();
-            boolean status = obj.getBoolean("status");
-            if (status) {
-                JSONArray array = obj.getJSONArray("data");
-
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject obj1 = array.getJSONObject(i);
-                    BatchModel bm = new BatchModel();
-                    bm.id = obj1.getInt("id");
-                    bm.name = obj1.getString("name");
-                    bm.batchCode = obj1.getString("batch_code");
-                    bm.categoryId = obj1.getInt("category_id");
-                    bm.subCategoryId = obj1.getInt("sub_cat_id");
-                    bm.subCatName = obj1.getString("subcategory");
-                    bm.catName = obj1.getString("category");
-                    bm.year = obj1.getInt("year");
-                    bm.courseDuration = obj1.getString("course_duration");
-                    bm.startDate = obj1.getString("start_date");
-                    bm.endDate = obj1.getString("end_date");
-                    bm.examDuration = obj1.getInt("exam_duration");
-
-                    blm.batchModelArrayList.add(bm);
-                }
-            } else {
-                blm.setError(true);
-                blm.setErrorMessage(obj.getString("message"));
-            }
-            return blm;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public StatusModel processStatusModel(String json) {
-        try {
-            JSONObject obj = new JSONObject(json);
-            StatusModel vsm = new StatusModel();
-            boolean status = obj.getBoolean("status");
-            String message = obj.getString("message");
-            vsm.status = status;
-            vsm.message = message;
-            return vsm;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public StudentModel processStudentModel(String json) {
-        try {
-            JSONObject obj = new JSONObject(json);
-            StudentModel vsm = new StudentModel();
-            boolean status = obj.getBoolean("status");
-            vsm.status = status;
-            JSONArray array = obj.getJSONArray("data");
-
-            if (status) {
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject obj1 = array.getJSONObject(i);
-                    StudentModel bm = new StudentModel();
-                    bm.id = obj1.getInt("id");
-                    bm.studentCode = obj1.getString("student_code");
-                    bm.batchId = obj1.getInt("batch_id");
-                    bm.batchCode = obj1.getString("batch_code");
-                    bm.studenName = obj1.getString("name");
-                    bm.email = obj1.getString("email");
-                    bm.phone = obj1.getString("phone");
-                    bm.dob = obj1.getString("dob");
-                    bm.image = obj1.getString("image");
-                    bm.address = obj1.getString("address");
-
-                    vsm.studentModelArrayList.add(bm);
-                }
-            }
-            return vsm;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-*/
 
 }
