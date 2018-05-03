@@ -119,6 +119,7 @@ public class Util {
             Date dateobj = new Date();
             System.out.println(df.format(dateobj));
 
+
         /*getting current date time using calendar class
         * An Alternative of above*/
 
