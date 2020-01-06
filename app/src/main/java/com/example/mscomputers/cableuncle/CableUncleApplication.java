@@ -30,6 +30,9 @@ public class CableUncleApplication extends Application {
     public void onCreate() {
         super.onCreate();
         System.gc();
+        System.out.println("Hi");
+
+
     }
 
     @Override
